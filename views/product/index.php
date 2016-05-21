@@ -56,6 +56,10 @@ $this->params['breadcrumbs'][] = $this->title;
 				}
 			],
 			[
+				'label' => 'Цена',
+				'value' => 'price.price'
+			],
+			[
 				'attribute' => 'available',
 				'filter' => Html::activeDropDownList(
 					$searchModel,
