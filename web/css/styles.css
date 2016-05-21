@@ -12,3 +12,8 @@
 .product-form .block {
     padding-bottom: 10px;
 }
+
+.export-block {
+    float: right;
+    width: 200px;
+}

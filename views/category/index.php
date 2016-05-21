@@ -1,30 +1,45 @@
 <?php
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\grid\GridView;
+use yii\helpers\Url;
 use pistol88\shop\models\Category;
-
-/* @var $this yii\web\View */
-/* @var $searchModel pistol88\shop\models\CategorySearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+use kartik\export\ExportMenu;
 
 $this->title = 'Категории';
 $this->params['breadcrumbs'][] = $this->title;
+
+\pistol88\shop\assets\BackendAsset::register($this);
 ?>
 <div class="category-index">
 
     <p>
         <?= Html::a('Создать категорию', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    
-    <p>
-        <a href="?view=tree" <?php if(yii::$app->request->get('view') == 'tree' | yii::$app->request->get('view') == '') echo ' style="font-weight: bolder;"'; ?>>Деревом</a> | 
-        <a href="?view=list" <?php if(yii::$app->request->get('view') == 'list') echo ' style="font-weight: bolder;"'; ?>>Списком</a>
-    </p>
 
+    <ul class="nav nav-pills">
+        <li role="presentation" <?php if(yii::$app->request->get('view') == 'tree' | yii::$app->request->get('view') == '') echo ' class="active"'; ?>><a href="<?=Url::toRoute(['category/index', 'view' => 'tree']);?>">Деревом</a></li>
+        <li role="presentation" <?php if(yii::$app->request->get('view') == 'list') echo ' class="active"'; ?>><a href="<?=Url::toRoute(['category/index', 'view' => 'list']);?>">Списком</a></li>
+    </ul>
+    
+    <div class="export-block">
+        <p><strong>Экспорт</strong></p>
+        <?php
+        $gridColumns = [
+            'id',
+            'name',
+        ];
+
+        echo ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => $gridColumns
+        ]);
+        ?>
+    </div>
+    <br style="clear: both;"></div>
     <?php
+    
     if(isset($_GET['view']) && $_GET['view'] == 'list') {
-        $categories = GridView::widget([
+        $categories = \kartik\grid\GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
             'columns' => [
@@ -36,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'image',
                     'filter' => false,
                     'content' => function ($image) {
-                        if($image = $image->getThumb('thumb')) {
+                        if($image = $image->getImage()->getUrl('50x50')) {
                             return "<img src=\"{$image}\" class=\"thumb\" />";
                         }
                     }

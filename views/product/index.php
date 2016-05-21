@@ -1,25 +1,44 @@
 <?php
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\grid\GridView;
 use pistol88\shop\models\ProductOption;
 use pistol88\shop\models\Category;
 use pistol88\shop\models\Producer;
-
-/* @var $this yii\web\View */
-/* @var $searchModel pistol88\shop\models\ProductSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+use kartik\export\ExportMenu;
 
 $this->title = 'Товары';
 $this->params['breadcrumbs'][] = $this->title;
+
+\pistol88\shop\assets\BackendAsset::register($this);
 ?>
 <div class="product-index">
 
     <p>
         <?= Html::a('Добавить товар', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    
+    <div class="export-block">
+        <p><strong>Экспорт</strong></p>
+        <?php
+        $gridColumns = [
+            'id',
+            'code',
+            'category.name',
+            'producer.name',
+            'name',
+            'price.price',
+            'available',
+        ];
 
-    <?= GridView::widget([
+        echo ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => $gridColumns
+        ]);
+        ?>
+    </div>
+    <br style="clear: both;"></div>
+    <?php
+    echo \kartik\grid\GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -31,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'format' => 'images',
                 'filter' => false,
 				'content' => function ($image) {
-                    if($image = $image->getThumb('thumb')) {
+                    if($image = $image->getImage()->getUrl('50x50')) {
                         return "<img src=\"{$image}\" class=\"thumb\" />";
                     }
 				}

@@ -49,7 +49,7 @@ class Category extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'parent_id' => 'Родительская категория',
-            'name' => 'Имя',
+            'name' => 'Имя категории',
             'slug' => 'Сео имя',
             'text' => 'Описание',
             'image' => 'Картинка',

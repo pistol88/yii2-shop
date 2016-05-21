@@ -1,14 +1,12 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
-
-/* @var $this yii\web\View */
-/* @var $searchModel pistol88\shop\models\PageSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+use kartik\export\ExportMenu;
 
 $this->title = 'Производители';
 $this->params['breadcrumbs'][] = $this->title;
+
+\pistol88\shop\assets\BackendAsset::register($this);
 ?>
 <div class="page-index">
 
@@ -16,7 +14,23 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Создать производителя', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
+    <div class="export-block">
+        <p><strong>Экспорт</strong></p>
+        <?php
+        $gridColumns = [
+            'id',
+            'name',
+        ];
+
+        echo ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => $gridColumns
+        ]);
+        ?>
+    </div>
+    <br style="clear: both;"></div>
+    
+    <?= \kartik\grid\GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
