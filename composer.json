@@ -25,6 +25,7 @@
         "pistol88/yii2-seo": "*",
         "pistol88/yii2-filter": "*",
         "pistol88/yii2-relations": "*",
+        "voskobovich/yii2-many-many-behavior": "^3.0",
         "kartik-v/yii2-widget-select2": "*",
         "asofter/yii2-imperavi-redactor": "dev-master@dev",
         "zelenin/yii2-slug-behavior": "~1.5.1",

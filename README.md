@@ -51,6 +51,9 @@ php yii migrate --migrationPath=vendor/pistol88/yii2-shop/migrations
             'class' => 'pistol88\shop\Module',
             'adminRoles' => ['administrator'],
         ],
+        'promocode' => [
+            'class' => 'pistol88\promocode\Module',
+        ],
         'filter' => [
             'class' => 'pistol88\filter\Module',
             'adminRoles' => ['administrator'],
