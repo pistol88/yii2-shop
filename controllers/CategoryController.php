@@ -3,7 +3,6 @@
 namespace pistol88\shop\controllers;
 
 use Yii;
-use pistol88\shop\models\Category;
 use pistol88\shop\models\category\CategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -54,7 +53,7 @@ class CategoryController extends Controller
 
     public function actionCreate()
     {
-        $model = new Category();
+        $model = $this->module->getService('category');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['update', 'id' => $model->id]);
@@ -87,7 +86,9 @@ class CategoryController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = Category::findOne($id)) !== null) {
+        $model = $this->module->getService('category');
+        
+        if (($model = $model::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

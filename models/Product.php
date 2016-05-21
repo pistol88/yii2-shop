@@ -34,6 +34,9 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
             'seo' => [
                 'class' => 'pistol88\seo\behaviors\SeoFields',
             ],
+            'filter' => [
+                'class' => 'pistol88\filter\behaviors\AttachFilterValues',
+            ],
         ];
 	}
 	

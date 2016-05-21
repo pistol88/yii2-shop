@@ -2,9 +2,7 @@
 namespace pistol88\shop\controllers;
 
 use Yii;
-use pistol88\shop\models\Product;
 use pistol88\shop\models\product\ProductSearch;
-use pistol88\shop\models\Price;
 use pistol88\shop\models\price\PriceSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -55,7 +53,7 @@ class ProductController extends Controller
 
     public function actionCreate()
     {
-        $model = new Product();
+        $model = $this->module->getService('product');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['update', 'id' => $model->id]);
@@ -74,7 +72,7 @@ class ProductController extends Controller
         $typeParams = Yii::$app->request->queryParams;
         $typeParams['PriceSearch']['product_id'] = $id;
         $dataProvider = $searchModel->search($typeParams);
-        $priceModel = new Price;
+        $priceModel = $this->module->getService('price');
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['update', 'id' => $model->id]);
@@ -97,7 +95,9 @@ class ProductController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = Product::findOne($id)) !== null) {
+        $model = $this->module->getService('product');
+        
+        if (($model = $model::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

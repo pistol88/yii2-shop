@@ -8,3 +8,7 @@
 .prices-column {
     border-left: 1px solid #ccc;
 }
+
+.product-form .block {
+    padding-bottom: 10px;
+}

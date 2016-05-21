@@ -23,6 +23,7 @@
         "pistol88/yii2-gallery": "*",
         "pistol88/yii2-tree": "*",
         "pistol88/yii2-seo": "*",
+        "pistol88/yii2-filter": "*",
         "pistol88/yii2-relations": "*",
         "kartik-v/yii2-widget-select2": "*",
         "asofter/yii2-imperavi-redactor": "dev-master@dev",

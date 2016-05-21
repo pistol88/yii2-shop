@@ -6,6 +6,15 @@ use yii\db\ActiveQuery;
 
 class ProductQuery extends ActiveQuery
 {
+    function behaviors()
+    {
+       return [
+           'filter' => [
+               'class' => 'pistol88\filter\behaviors\Filtered',
+           ],
+       ];
+    }
+    
     public function available()
     {
          return $this->andwhere("`available` = 'yes'");

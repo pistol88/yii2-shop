@@ -2,7 +2,6 @@
 namespace pistol88\shop\controllers;
 
 use Yii;
-use pistol88\shop\models\Price;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -34,7 +33,7 @@ class PriceController extends Controller
 
     public function actionCreate()
     {
-        $model = new Price();
+        $model = $this->module->getService('price');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //nothing
@@ -55,12 +54,15 @@ class PriceController extends Controller
 		$name = Yii::$app->request->post('name');
 		$value = Yii::$app->request->post('value');
 		$pk = unserialize(base64_decode(Yii::$app->request->post('pk')));
-		Price::editField($pk, $name, $value);
+        $model = $this->module->getService('price');
+		$model::editField($pk, $name, $value);
 	}
 
     protected function findModel($id)
     {
-        if (($model = Price::findOne($id)) !== null) {
+        $model = $this->module->getService('price');
+        
+        if (($model = $model::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

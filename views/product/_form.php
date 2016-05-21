@@ -13,13 +13,14 @@ use pistol88\seo\widgets\SeoForm;
 ?>
 
 <div class="product-form">
+
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+    
     <div class="form-group shop-control">
         <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         <a class="btn btn-default" href="<?=Url::toRoute(['product/delete', 'id' => 8]);?>" title="Удалить" aria-label="Удалить" data-confirm="Вы уверены, что хотите удалить этот элемент?" data-method="post" data-pjax="0"><span class="glyphicon glyphicon-trash"></span></a>
     </div>
-
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
-
+    
     <div class="row">
         <div class="col-lg-6 col-xs-6">
             <?= $form->field($model, 'name')->textInput() ?>
@@ -42,7 +43,7 @@ use pistol88\seo\widgets\SeoForm;
         <div class="col-lg-6 col-xs-6">
             <?= $form->field($model, 'category_id')
                 ->widget(Select2::classname(), [
-                'data' => Category::buldTextTree(),
+                'data' => Category::buildTextTree(),
                 'language' => 'ru',
                 'options' => ['placeholder' => 'Выберите категорию ...'],
                 'pluginOptions' => [
@@ -61,7 +62,7 @@ use pistol88\seo\widgets\SeoForm;
             ]); ?>
         </div>
         <div class="col-lg-6 col-xs-6">
-            <?= $form->field($model, 'category_ids')->dropDownList(Category::buldTextTree(), ['multiple' => true, 'size' => 5])->label('Все категории') ?>
+            <?= $form->field($model, 'category_ids')->dropDownList(Category::buildTextTree(), ['multiple' => true, 'size' => 5])->label('Все категории') ?>
         </div>
     </div>
 
@@ -87,9 +88,10 @@ use pistol88\seo\widgets\SeoForm;
         'form' => $form,
     ]); ?>
     
-    <h3>Связанные продукты</h3>
-    <?=\pistol88\relations\widgets\Constructor::widget(['model' => $model]);?>
-    
+    <div class="block">
+        <h3>Связанные продукты</h3>
+        <?=\pistol88\relations\widgets\Constructor::widget(['model' => $model]);?>
+    </div>
 
     <div class="form-group shop-control">
         <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

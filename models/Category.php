@@ -75,7 +75,7 @@ class Category extends \yii\db\ActiveRecord
         return $return;
     }
     
-	public static function buldTextTree($id = null, $level = 1, $ban = [])
+	public static function buildTextTree($id = null, $level = 1, $ban = [])
     {
         $return = [];
         
@@ -91,7 +91,7 @@ class Category extends \yii\db\ActiveRecord
         foreach($categories as $category) {
             if(!in_array($category['id'], $ban)) {
                 $return[$category['id']] = "$prefix {$category['name']}";
-                $return = $return + self::buldTextTree($category['id'], $level, $ban);
+                $return = $return + self::buildTextTree($category['id'], $level, $ban);
             }
         }
         

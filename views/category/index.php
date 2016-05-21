@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'filter' => Html::activeDropDownList(
                         $searchModel,
                         'parent_id',
-                        Category::buldTextTree(),
+                        Category::buildTextTree(),
                         ['class' => 'form-control', 'prompt' => 'Категория']
                     ),
                     'value' => 'category.name'

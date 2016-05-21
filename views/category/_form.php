@@ -23,7 +23,7 @@ use pistol88\seo\widgets\SeoForm;
 
     <?= $form->field($model, 'parent_id')
             ->widget(Select2::classname(), [
-                'data' => Category::buldTextTree(null, 1, [$model->id]),
+                'data' => Category::buildTextTree(null, 1, [$model->id]),
                 'language' => 'ru',
                 'options' => ['placeholder' => 'Выберите категорию ...'],
                 'pluginOptions' => [

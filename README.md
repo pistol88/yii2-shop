@@ -8,6 +8,7 @@ Yii2-shop
 * Производителями
 * Товарами
 * Ценами
+* Фильтрами (опциями)
 
 Установка
 ---------------------------------
@@ -48,6 +49,16 @@ php yii migrate --migrationPath=vendor/pistol88/yii2-shop/migrations
             'class' => 'pistol88\shop\Module',
             'adminRoles' => ['administrator'],
         ],
+        'filter' => [
+            'class' => 'pistol88\filter\Module',
+            'adminRoles' => ['administrator'],
+            'relationModel' => 'pistol88\shop\models\Product',
+            'relationFieldName' => 'category_id',
+            'relationFieldValues' =>
+                function() {
+                    return \pistol88\shop\models\buldTextTree();
+                },
+        ],
         'relations' => [
             'class' => 'pistol88\relations\Module',
             'fields' => ['code'],
@@ -62,6 +73,8 @@ php yii migrate --migrationPath=vendor/pistol88/yii2-shop/migrations
         //..
     ]
 ```
+
+В shop можно передать modelMap, где указать нужные вам модели. Также можно указать стандартные yiiшные controllerMap, viewPath, чтобы подменить контроллеры и вьюхи своими в процессе развития вашего магазина.
 
 В секцию components:
 
@@ -85,6 +98,7 @@ php yii migrate --migrationPath=vendor/pistol88/yii2-shop/migrations
 * ?r=shop/product
 * ?r=shop/category
 * ?r=shop/producer
+* ?r=filter/filter
 
 Виджеты
 ---------------------------------

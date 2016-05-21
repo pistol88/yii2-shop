@@ -14,7 +14,6 @@ $this->params['breadcrumbs'][] = 'Обновить';
 
     <div class="row">
         <div class="col-lg-7 edit-column">
- 
             <?= $this->render('_form', [
                 'model' => $model,
             ]) ?>
@@ -72,6 +71,13 @@ $this->params['breadcrumbs'][] = 'Обновить';
                     'model' => $priceModel,
                     'productModel' => $model,
                 ]) ?>
+                
+                <?php if($filterPanel = \pistol88\filter\widgets\Choice::widget(['model' => $model])) { ?>
+                    <div class="block">
+                        <h2>Фильтр</h2>
+                        <?=$filterPanel;?>
+                    </div>
+                <?php } ?>
             </div>
         </div>
     </div>
