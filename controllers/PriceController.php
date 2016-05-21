@@ -1,0 +1,69 @@
+<?php
+namespace pistol88\shop\controllers;
+
+use Yii;
+use pistol88\shop\models\Price;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+
+class PriceController extends Controller
+{
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => $this->module->adminRoles,
+                    ]
+                ]
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                    'edittable' => ['post'],
+                ],
+            ],
+        ];
+    }
+
+    public function actionCreate()
+    {
+        $model = new Price();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //nothing
+        }
+        
+        $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+
+        $this->redirect(Yii::$app->request->referrer);
+    }
+
+	public function actionEditField()
+	{
+		$name = Yii::$app->request->post('name');
+		$value = Yii::$app->request->post('value');
+		$pk = unserialize(base64_decode(Yii::$app->request->post('pk')));
+		Price::editField($pk, $name, $value);
+	}
+
+    protected function findModel($id)
+    {
+        if (($model = Price::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+}
