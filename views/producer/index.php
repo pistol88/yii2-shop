@@ -35,7 +35,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['attribute' => 'id', 'filter' => false, 'options' => ['style' => 'width: 55px;']],
+            
             'name',
+            [
+				'attribute' => 'image',
+				'format' => 'image',
+                'filter' => false,
+				'content' => function ($image) {
+                    if($image = $image->getImage()->getUrl('50x50')) {
+                        return "<img src=\"{$image}\" class=\"thumb\" />";
+                    }
+				}
+			],
+            
             ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 125px;']],
         ],
     ]); ?>
