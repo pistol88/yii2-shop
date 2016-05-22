@@ -33,7 +33,7 @@ git clone https://github.com/pistol88/yii2-shop.git
 }
 ```
 
-После этого не забудьте выполнить composer update.
+Модуль зависит от многих других пакетов, скопируйте их в свой composer.json в секцию require. После этого не забудьте выполнить composer update.
 
 Если хотите установить в папку vendor через composer и ничего не менять потом, устанавливайте стандартно: 'php composer require pistol88/yii2-shop' и 'php composer update' в командной строке.
 
