@@ -15,23 +15,27 @@ Yii2-shop
 Установка
 ---------------------------------
 
-Выполнить команду
+Рекомендую устанавливать в common/modules/pistol88:
 
 ```
-php composer require pistol88/yii2-shop "*"
+git clone https://github.com/pistol88/yii2-shop.git
 ```
 
-Или добавить в composer.json
+И подключать через psr-4 секцию composer.json:
 
 ```
-"pistol88/yii2-shop": "*",
+{
+    "autoload": {
+        "psr-4": {
+            "pisrol88\\shop": "common/modules/pistol88/shop",
+        }
+    }
+}
 ```
 
-И выполнить
+После этого не забудьте выполнить composer update.
 
-```
-php composer update
-```
+Если хотите установить в папку vendor через composer и ничего не менять потом, устанавливайте стандартно: 'php composer require pistol88/yii2-shop' и 'php composer update' в командной строке.
 
 Миграция:
 
