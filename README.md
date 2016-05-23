@@ -27,7 +27,7 @@ git clone https://github.com/pistol88/yii2-shop.git
 {
     "autoload": {
         "psr-4": {
-            "pisrol88\\shop": "common/modules/pistol88/shop",
+            "pistol88\\shop": "common/modules/pistol88/shop",
         }
     }
 }
