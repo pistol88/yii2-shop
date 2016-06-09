@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use pistol88\shop\models\ProductOption;
 use pistol88\shop\models\Category;
 use pistol88\shop\models\Producer;
@@ -15,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Добавить товар', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Поступление', Url::toRoute(['/shop/incoming/create']), ['class' => 'btn btn-success']) ?>
     </p>
     
     <div class="export-block">
@@ -26,8 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'category.name',
             'producer.name',
             'name',
-            'price.price',
-            'available',
+            'price',
+            'amount',
         ];
 
         echo ExportMenu::widget([
@@ -57,8 +59,10 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			[
 				'label' => 'Цена',
-				'value' => 'price.price'
+				'value' => 'price'
 			],
+            'amount',
+            /*
 			[
 				'attribute' => 'available',
 				'filter' => Html::activeDropDownList(
@@ -68,6 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					['class' => 'form-control', 'prompt' => 'Наличие']
 				),
 			],
+            */
 			[
 				'attribute' => 'category_id',
 				'filter' => Html::activeDropDownList(

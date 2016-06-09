@@ -15,8 +15,9 @@ class m160521_112616_Mass extends Migration {
         try {
             $this->createTable('{{%shop_product}}', [
                 'id' => Schema::TYPE_PK . "",
-                'category_id' => Schema::TYPE_INTEGER . "(10) NOT NULL",
+                'category_id' => Schema::TYPE_INTEGER . "(10)",
                 'producer_id' => Schema::TYPE_INTEGER . "(11)",
+                'amount' => Schema::TYPE_INTEGER . "(11)",
                 'related_products' => Schema::TYPE_TEXT . " COMMENT 'PHP serialize'",
                 'name' => Schema::TYPE_STRING . "(200) NOT NULL",
                 'code' => Schema::TYPE_STRING . "(155)",

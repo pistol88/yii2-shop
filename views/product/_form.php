@@ -18,7 +18,9 @@ use pistol88\seo\widgets\SeoForm;
     
     <div class="form-group shop-control">
         <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-        <a class="btn btn-default" href="<?=Url::toRoute(['product/delete', 'id' => 8]);?>" title="Удалить" aria-label="Удалить" data-confirm="Вы уверены, что хотите удалить этот элемент?" data-method="post" data-pjax="0"><span class="glyphicon glyphicon-trash"></span></a>
+        <?php if(!$model->isNewRecord) { ?>
+            <a class="btn btn-default" href="<?=Url::toRoute(['product/delete', 'id' => $model->id]);?>" title="Удалить" aria-label="Удалить" data-confirm="Вы уверены, что хотите удалить этот элемент?" data-method="post" data-pjax="0"><span class="glyphicon glyphicon-trash"></span></a>
+        <?php } ?>
     </div>
     
     <div class="row">
@@ -26,13 +28,22 @@ use pistol88\seo\widgets\SeoForm;
             <?= $form->field($model, 'name')->textInput() ?>
         </div>
         <div class="col-lg-6 col-xs-6">
-            <?= $form->field($model, 'code')->textInput() ?>
+            <?= $form->field($model, 'slug')->textInput(['placeholder' => 'Не обязательно']) ?>
         </div>
     </div>
 	
     <div class="row">
         <div class="col-lg-6 col-xs-6">
-            <?= $form->field($model, 'available')->dropDownList(['yes' => 'Да', 'no' => 'Нет', ], ['prompt' => '']) ?>
+            <?= $form->field($model, 'amount')->textInput() ?>
+        </div>
+        <div class="col-lg-6 col-xs-6">
+            <?= $form->field($model, 'code')->textInput() ?>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-6 col-xs-6">
+            <?= $form->field($model, 'available')->radioList(['yes' => 'Да','no' => 'Нет']); ?>
         </div>
         <div class="col-lg-6 col-xs-6">
             <?= $form->field($model, 'sort')->textInput() ?>
@@ -62,7 +73,16 @@ use pistol88\seo\widgets\SeoForm;
             ]); ?>
         </div>
         <div class="col-lg-6 col-xs-6">
-            <?= $form->field($model, 'category_ids')->dropDownList(Category::buildTextTree(), ['multiple' => true, 'size' => 5])->label('Все категории') ?>
+            <?= $form->field($model, 'category_ids')
+                ->label('Прочие категории')
+                ->widget(Select2::classname(), [
+                'data' => Category::buildTextTree(),
+                'language' => 'ru',
+                'options' => ['multiple' => true, 'placeholder' => 'Доп. категории ...'],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ]); ?>
         </div>
     </div>
 
@@ -88,14 +108,18 @@ use pistol88\seo\widgets\SeoForm;
         'form' => $form,
     ]); ?>
     
-    <div class="block">
-        <h3>Связанные продукты</h3>
-        <?=\pistol88\relations\widgets\Constructor::widget(['model' => $model]);?>
+    <div class=" panel panel-default">
+        <div class="panel-heading"><strong>Связанные продукты</strong></div>
+        <div class="panel-body">
+            <?=\pistol88\relations\widgets\Constructor::widget(['model' => $model]);?>
+        </div>
     </div>
 
     <div class="form-group shop-control">
         <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-        <a class="btn btn-default" href="<?=Url::toRoute(['product/delete', 'id' => 8]);?>" title="Удалить" aria-label="Удалить" data-confirm="Вы уверены, что хотите удалить этот элемент?" data-method="post" data-pjax="0"><span class="glyphicon glyphicon-trash"></span></a>
+        <?php if(!$model->isNewRecord) { ?>
+            <a class="btn btn-default" href="<?=Url::toRoute(['product/delete', 'id' => $model->id]);?>" title="Удалить" aria-label="Удалить" data-confirm="Вы уверены, что хотите удалить этот элемент?" data-method="post" data-pjax="0"><span class="glyphicon glyphicon-trash"></span></a>
+        <?php } ?>
     </div>
 
     <?php ActiveForm::end(); ?>

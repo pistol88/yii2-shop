@@ -8,7 +8,7 @@ use pistol88\shop\models\Price;
 use pistol88\shop\models\product\ProductQuery;
 use yii\db\ActiveQuery;
 
-class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interfaces\Torelate
+class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interfaces\Torelate, \pistol88\cart\interfaces\CartElement
 {
 	function behaviors()
     {
@@ -58,9 +58,50 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return $this->id;
     }
     
+    public function minusAmount($count)
+    {
+        $this->amount = $this->amount-$count;
+        
+        return $this->save(false);
+    }
+    
+    public function plusAmount($count)
+    {
+        $this->amount = $this->amount+$count;
+        
+        return $this->save(false);
+    }
+    
+    public function getProduct()
+    {
+        return $this;
+    }
+    
+    public function getCartId() {
+        return $this->id;
+    }
+    
+    public function getCartName() {
+        return $this->name;
+    }
+    
+    public function getCartPrice() {
+        return $this->price;
+    }
+
+	public function getCartOptions()
+	{
+		return '';
+	}
+    
     public function getName()
     {
         return $this->name;
+    }
+    
+    public function getSellModel()
+    {
+        return $this;
     }
     
     public function getPrices()
@@ -75,9 +116,13 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         $price = $this->hasOne(Price::className(), ['product_id' => 'id']);
         
         if($type == 'lower') {
-            return $price->orderBy('price ASC');
+            $price = $price->orderBy('price ASC')->one();
         } else {
-            return $price->orderBy('price DESC');
+            $price = $price->orderBy('price DESC')->one();
+        }
+        
+        if($price) {
+            return $price->price;
         }
     }
     
@@ -89,8 +134,8 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
     public function rules()
     {
         return [
-            [['category_id', 'name', 'text'], 'required'],
-            [['category_id', 'producer_id', 'sort'], 'integer'],
+            [['name'], 'required'],
+            [['category_id', 'producer_id', 'sort', 'amount'], 'integer'],
             [['text', 'available', 'code'], 'string'],
             [['category_ids'], 'each', 'rule' => ['integer']],
             [['name'], 'string', 'max' => 200],
@@ -112,6 +157,7 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
             'available' => 'В наличии',
             'sort' => 'Сортировка',
             'slug' => 'СЕО-имя',
+            'amount' => 'Количество',
         ];
     }
 	

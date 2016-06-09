@@ -13,28 +13,40 @@ $this->params['breadcrumbs'][] = 'Обновить';
 <div class="product-update">
 
     <div class="row">
-        <div class="col-lg-7 edit-column">
+        <div class="col-lg-6 edit-column">
             <?= $this->render('_form', [
                 'model' => $model,
             ]) ?>
         </div>
-        <div class="col-lg-5 prices-column">
+        <div class="col-lg-6 prices-column">
             <div class="stickyeah">
                 <h2>Цены</h2>
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
                     'columns' => [
-                        ['class' => 'yii\grid\SerialColumn', 'options' => ['style' => 'width: 20px;']],
-                        ['attribute' => 'id', 'filter' => false, 'options' => ['style' => 'width: 55px;']],
+                        //['class' => 'yii\grid\SerialColumn', 'options' => ['style' => 'width: 20px;']],
+                        ['attribute' => 'id', 'filter' => false, 'options' => ['style' => 'width: 25px;']],
                         [
                             'class' => EditableColumn::className(),
                             'attribute' => 'name',
                             'url' => ['price/edit-field'],
                             'type' => 'text',
+                            'filter' => false,
                             'editableOptions' => [
                                 'mode' => 'inline',
                             ],
+                            'options' => ['style' => 'width: 75px;']
+                        ],
+                        [
+                            'class' => EditableColumn::className(),
+                            'attribute' => 'amount',
+                            'url' => ['price/edit-field'],
+                            'type' => 'text',
+                            'editableOptions' => [
+                                'mode' => 'inline',
+                            ],
+                            'options' => ['style' => 'width: 49px;']
                         ],
                         [
                             'class' => EditableColumn::className(),
@@ -45,13 +57,13 @@ $this->params['breadcrumbs'][] = 'Обновить';
                                 'mode' => 'inline',
                                 'source' => ['yes', 'no'],
                             ],
-                            'filter' => Html::activeDropDownList(
+                            'filter' => false, /*Html::activeDropDownList(
                                 $searchModel,
                                 'available',
                                 ['no' => 'Нет', 'yes' => 'Да'],
                                 ['class' => 'form-control', 'prompt' => 'Наличие']
-                            ),
-                            'options' => ['style' => 'width: 90px;']
+                            ),*/
+                            'contentOptions' => ['style' => 'width: 27px;']
                         ],
                         [
                             'class' => EditableColumn::className(),
@@ -61,9 +73,9 @@ $this->params['breadcrumbs'][] = 'Обновить';
                             'editableOptions' => [
                                 'mode' => 'inline',
                             ],
-                            'options' => ['style' => 'width: 70px;']
+                            'options' => ['style' => 'width: 40px;']
                         ],
-                        ['class' => 'yii\grid\ActionColumn', 'controller' => 'price', 'template' => '{delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 60px;']],
+                        ['class' => 'yii\grid\ActionColumn', 'controller' => 'price', 'template' => '{update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 60px;']],
                     ],
                 ]); ?>
 
@@ -77,6 +89,7 @@ $this->params['breadcrumbs'][] = 'Обновить';
                         <h2>Фильтр</h2>
                         <?=$filterPanel;?>
                     </div>
+                    <br />
                 <?php } ?>
             </div>
         </div>
