@@ -2,15 +2,26 @@
 namespace pistol88\shop\controllers;
 
 use Yii;
-use pistol88\shop\models\Category;
-use pistol88\shop\models\category\CategorySearch;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
 class ToolsController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => $this->module->adminRoles,
+                    ]
+                ]
+            ],
+        ];
+    }
+    
     public function actions()
     {
         return [

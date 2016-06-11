@@ -46,6 +46,12 @@ php yii migrate --migrationPath=vendor/pistol88/yii2-shop/migrations
 Настройка
 ---------------------------------
 
+В конфиг (скорее всего, bootstrap.php) добавить:
+
+```
+Yii::setAlias('@storageUrl','/frontend/web/images');
+```
+
 В секцию modules конфига добавить:
 
 ```
@@ -91,7 +97,7 @@ php yii migrate --migrationPath=vendor/pistol88/yii2-shop/migrations
             'class' => '\trntv\filekit\Storage',
             'baseUrl' => '@storageUrl/source',
             'filesystem'=> function() {
-                $adapter = new \League\Flysystem\Adapter\Local('some/path/to/storage');
+                $adapter = new \League\Flysystem\Adapter\Local(dirname(dirname(__DIR__)).'/frontend/web/images/source');
                 return new League\Flysystem\Filesystem($adapter);
             },
         ],
