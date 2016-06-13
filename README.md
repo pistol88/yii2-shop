@@ -11,6 +11,13 @@ Yii2-shop
 * Товарами
 * Ценами
 * Фильтрами (опциями)
+* Дополнительными полями
+
+Если есть необходимость, можно также подтянуть мои другие модули:
+
+* [pistol88/yii2-cart](https://github.com/pistol88/yii2-cart) - корзина
+* [pistol88/yii2-cart](https://github.com/pistol88/yii2-order) - заказ
+* [pistol88/yii2-cart](https://github.com/pistol88/yii2-promocode) - промокоды
 
 Установка
 ---------------------------------
@@ -107,10 +114,11 @@ Yii::setAlias('@storageUrl','/frontend/web/images');
 
 Использование
 ---------------------------------
-* ?r=shop/product
-* ?r=shop/category
-* ?r=shop/producer
-* ?r=filter/filter
+* ?r=shop/product - продукты
+* ?r=shop/category - категории
+* ?r=shop/producer - производители
+* ?r=filter/filter - фильтры (опции)
+* ?r=field/field - доп. поля
 
 Виджеты
 ---------------------------------

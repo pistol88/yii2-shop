@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = 'Обновить';
             ]) ?>
         </div>
         <div class="col-lg-6 prices-column">
-            <div class="stickyeah">
+            <div class="stickyeah-no">
                 <h2>Цены</h2>
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
@@ -89,7 +89,13 @@ $this->params['breadcrumbs'][] = 'Обновить';
                         <h2>Фильтр</h2>
                         <?=$filterPanel;?>
                     </div>
-                    <br />
+                <?php } ?>
+                
+                <?php if($fieldPanel = \pistol88\field\widgets\Choice::widget(['model' => $model])) { ?>
+                    <div class="block">
+                        <h2>Прочее</h2>
+                        <?=$fieldPanel;?>
+                    </div>
                 <?php } ?>
             </div>
         </div>

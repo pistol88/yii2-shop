@@ -37,6 +37,9 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
             'filter' => [
                 'class' => 'pistol88\filter\behaviors\AttachFilterValues',
             ],
+            'field' => [
+                'class' => 'pistol88\field\behaviors\AttachFields',
+            ],
         ];
 	}
 	
