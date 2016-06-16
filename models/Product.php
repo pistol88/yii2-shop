@@ -56,6 +56,36 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return $return;
     }
     
+    public function rules()
+    {
+        return [
+            [['name'], 'required'],
+            [['category_id', 'producer_id', 'sort', 'amount'], 'integer'],
+            [['text', 'available', 'code'], 'string'],
+            [['category_ids'], 'each', 'rule' => ['integer']],
+            [['name'], 'string', 'max' => 200],
+            [['short_text', 'slug'], 'string', 'max' => 255]
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'code' => 'Код (актикул)',
+            'category_id' => 'Главная категория',
+            'producer_id' => 'Бренд',
+            'name' => 'Название',
+            'text' => 'Текст',
+            'short_text' => 'Короткий текст',
+            'images' => 'Картинки',
+            'available' => 'В наличии',
+            'sort' => 'Сортировка',
+            'slug' => 'СЕО-имя',
+            'amount' => 'Количество',
+        ];
+    }
+    
     public function getId()
     {
         return $this->id;
@@ -131,39 +161,9 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
     
     public function getLink()
     {
-        return Url::toRoute($this->category->slug.'/'.$this->slug);
+        return Url::toRoute([yii::$app->getModule('shop')->productUrlPrefix.'/'.$this->slug]);
     }
 
-    public function rules()
-    {
-        return [
-            [['name'], 'required'],
-            [['category_id', 'producer_id', 'sort', 'amount'], 'integer'],
-            [['text', 'available', 'code'], 'string'],
-            [['category_ids'], 'each', 'rule' => ['integer']],
-            [['name'], 'string', 'max' => 200],
-            [['short_text', 'slug'], 'string', 'max' => 255]
-        ];
-    }
-
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'code' => 'Код (актикул)',
-            'category_id' => 'Главная категория',
-            'producer_id' => 'Бренд',
-            'name' => 'Название',
-            'text' => 'Текст',
-            'short_text' => 'Короткий текст',
-            'images' => 'Картинки',
-            'available' => 'В наличии',
-            'sort' => 'Сортировка',
-            'slug' => 'СЕО-имя',
-            'amount' => 'Количество',
-        ];
-    }
-	
 	public function getCategory()
     {
 		return $this->hasOne(Category::className(), ['id' => 'category_id']);
@@ -182,6 +182,30 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
     
     public function afterDelete()
     {
+        parent::afterDelete();
+        
         Price::deleteAll(["product_id" => $this->id]);
+        
+        return false;
+    }
+    
+
+    public function afterSave($insert, $changedAttributes) {
+        parent::afterSave($insert, $changedAttributes);
+
+        if(!empty($this->category_id) && !empty($this->id)) {
+            if(!(new \yii\db\Query())
+            ->select('*')
+            ->from('{{%shop_product_to_category}}')
+            ->where('product_id ='.$this->id.' AND category_id = '.$this->category_id)
+            ->all()) {
+                yii::$app->db->createCommand()->insert('{{%shop_product_to_category}}', [
+                    'product_id' => $this->id,
+                    'category_id' => $this->category_id,
+                ])->execute();
+            }
+        }
+        
+        return true;
     }
 }

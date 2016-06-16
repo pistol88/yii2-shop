@@ -40,7 +40,7 @@ git clone https://github.com/pistol88/yii2-shop.git
 }
 ```
 
-Модуль зависит от многих других пакетов, скопируйте их в свой composer.json в секцию require. После этого не забудьте выполнить composer update.
+Модуль зависит от многих других пакетов, скопируйте их из моего в свой composer.json в секцию require. После этого не забудьте выполнить composer update и миграции каждого модуля.
 
 Если хотите установить в папку vendor через composer и ничего не менять потом, устанавливайте стандартно: 'php composer require pistol88/yii2-shop' и 'php composer update' в командной строке.
 
@@ -77,6 +77,15 @@ Yii::setAlias('@storageUrl','/frontend/web/images');
                 function() {
                     return \pistol88\shop\models\buldTextTree();
                 },
+        ],
+        'field' => [
+            'class' => 'pistol88\field\Module',
+            'relationModels' => [
+                'pistol88\shop\models\Product' => 'Продукты',
+                'pistol88\shop\models\Category' => 'Категории',
+                'pistol88\shop\models\Producer' => 'Производители',
+            ],
+            'adminRoles' => ['administrator'],
         ],
         'relations' => [
             'class' => 'pistol88\relations\Module',

@@ -18,8 +18,14 @@ class CategoryController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
+                        'actions' => ['index', 'delete', 'update'],
                         'allow' => true,
                         'roles' => $this->module->adminRoles,
+                    ],
+                    [
+                        'actions' => ['view'],
+                        'allow' => true,
+                        'roles' => ['@'],
                     ]
                 ]
             ],
@@ -44,10 +50,12 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function actionView($id)
+    public function actionView($slug)
     {
+        $model = $this->findModelBySlug($slug);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -91,7 +99,18 @@ class CategoryController extends Controller
         if (($model = $model::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('The requested product does not exist.');
+        }
+    }
+    
+    protected function findModelBySlug($slug)
+    {
+        $model = $this->module->getService('category');
+        
+        if (($model = $model::findOne(['slug' => $slug])) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested product does not exist.');
         }
     }
 }

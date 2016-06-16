@@ -7,6 +7,8 @@ class Module extends \yii\base\Module
 {
     public $adminRoles = ['admin', 'superadmin'];
     public $modelMap = [];
+    public $categoryUrlPrefix = '/shop/category/view';
+    public $productUrlPrefix = '/shop/product/view';
     
     public function init()
     {

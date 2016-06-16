@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
@@ -19,8 +20,19 @@ use pistol88\seo\widgets\SeoForm;
 	
 	<?= $form->field($model, 'sort')->textInput() ?>
 	
-    <?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
-
+    <?php echo $form->field($model, 'text')->widget(
+        \yii\imperavi\Widget::className(),
+        [
+            'plugins' => ['fullscreen', 'fontcolor', 'video'],
+            'options'=>[
+                'minHeight' => 400,
+                'maxHeight' => 400,
+                'buttonSource' => true,
+                'imageUpload' => Url::toRoute(['tools/upload-imperavi'])
+            ]
+        ]
+    ) ?>
+    
     <?= $form->field($model, 'parent_id')
             ->widget(Select2::classname(), [
                 'data' => Category::buildTextTree(null, 1, [$model->id]),

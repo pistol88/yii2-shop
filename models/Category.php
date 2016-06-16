@@ -20,6 +20,9 @@ class Category extends \yii\db\ActiveRecord
             'seo' => [
                 'class' => 'pistol88\seo\behaviors\SeoFields',
             ],
+            'field' => [
+                'class' => 'pistol88\field\behaviors\AttachFields',
+            ],
         ];
 	}
 	
@@ -38,7 +41,7 @@ class Category extends \yii\db\ActiveRecord
         return [
             [['parent_id', 'sort'], 'integer'],
             [['name'], 'required'],
-            [['text', 'image'], 'string'],
+            [['text'], 'string'],
             [['name'], 'string', 'max' => 55],
             [['slug'], 'string', 'max' => 255]
         ];
@@ -54,6 +57,7 @@ class Category extends \yii\db\ActiveRecord
             'text' => 'Описание',
             'image' => 'Картинка',
             'sort' => 'Сортировка',
+            'description' => 'Описание',
         ];
     }
 	
@@ -101,17 +105,21 @@ class Category extends \yii\db\ActiveRecord
     public function getProducts()
     {
         return $this->hasMany(Product::className(), ['id' => 'product_id'])
-             ->viaTable('{{%shop_product_to_category}}', ['category_id' => 'id']);
+             ->viaTable('{{%shop_product_to_category}}', ['category_id' => 'id'])->available();
     }
     
-	public function getCategory()
+    public function getChilds()
+    {
+        return $this->hasMany(Category::className(), ['parent_id' => 'id']);
+    }
+
+	public function getParent()
     {
 		return $this->hasOne(Category::className(), ['id' => 'parent_id']);
 	}
     
     public function getLink()
     {
-        return Url::toRoute(['/category/'.$this->slug]);
+        return Url::toRoute([yii::$app->getModule('shop')->categoryUrlPrefix, 'slug' => $this->slug]);
     }
-
 }

@@ -43,6 +43,7 @@ use pistol88\seo\widgets\SeoForm;
     
     <div class="row">
         <div class="col-lg-6 col-xs-6">
+            <?php if($model->isNewRecord) $model->available = 'yes'; ?>
             <?= $form->field($model, 'available')->radioList(['yes' => 'Да','no' => 'Нет']); ?>
         </div>
         <div class="col-lg-6 col-xs-6">

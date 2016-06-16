@@ -27,6 +27,9 @@ class Producer extends \yii\db\ActiveRecord
             'seo' => [
                 'class' => 'pistol88\seo\behaviors\SeoFields',
             ],
+            'field' => [
+                'class' => 'pistol88\field\behaviors\AttachFields',
+            ],
         ];
 	}
     /**

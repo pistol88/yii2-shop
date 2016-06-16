@@ -45,8 +45,10 @@ class m160521_112616_Mass extends Migration {
             $this->createIndex('id', '{{%shop_category}}', 'id,parent_id', 0);
             $this->createTable('{{%shop_price}}', [
                 'id' => Schema::TYPE_PK . "",
-                'name' => Schema::TYPE_STRING . "(100) NOT NULL",
+                'code' => Schema::TYPE_STRING . "(155) NOT NULL",
+                'name' => Schema::TYPE_STRING . "(155) NOT NULL",
                 'price' => Schema::TYPE_INTEGER . "(11)",
+                'amount' => Schema::TYPE_INTEGER . "(11)",
                 'product_id' => Schema::TYPE_INTEGER . "(11) NOT NULL",
                 'available' => "enum('yes','no')" . " DEFAULT 'yes'",
                 ], $tableOptions);
