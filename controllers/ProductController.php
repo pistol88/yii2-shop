@@ -93,6 +93,29 @@ class ProductController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionProductInfo()
+    {
+        $productCode = (int)yii::$app->request->post('productCode');
+        
+        $model = $this->module->getService('product');
+        
+        if($model = $model::find()->where('code=:code OR id=:code', [':code' => $productCode])->one()) {
+            $json = [
+                'status' => 'success',
+                'name' => $model->name,
+                'code' => $model->code,
+                'id' => $model->id,
+            ];
+        } else {
+            $json = [
+                'status' => 'fail',
+                'message' => yii::t('order', 'Not found')
+            ];
+        }
+        
+        die(json_encode($json));
+    }
+
     protected function findModel($id)
     {
         $model = $this->module->getService('product');

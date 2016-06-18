@@ -16,6 +16,7 @@ class Module extends \yii\base\Module
             $this->modelMap = [
                 'product' => '\pistol88\shop\models\Product',
                 'category' => '\pistol88\shop\models\Category',
+                'incoming' => '\pistol88\shop\models\Incoming',
                 'producer' => '\pistol88\shop\models\Producer',
                 'price' => '\pistol88\shop\models\Price'
             ];
