@@ -26,6 +26,7 @@
         "pistol88/yii2-seo": "*",
         "pistol88/yii2-filter": "*",
         "pistol88/yii2-field": "*",
+        "kartik-v/yii2-grid": "*",
         "pistol88/yii2-relations": "*",
         "voskobovich/yii2-many-many-behavior": "^3.0",
         "kartik-v/yii2-widget-select2": "*",
