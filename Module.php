@@ -10,6 +10,10 @@ class Module extends \yii\base\Module
     public $categoryUrlPrefix = '/shop/category/view';
     public $productUrlPrefix = '/shop/product/view';
     
+    const EVENT_PRODUCT_CREATE = 'create_product';
+    const EVENT_PRODUCT_DELETE = 'delete_product';
+    const EVENT_PRODUCT_UPDATE = 'update_product';
+    
     public function init()
     {
         if(empty($this->modelMap)) {

@@ -4,6 +4,7 @@ namespace pistol88\shop\controllers;
 use Yii;
 use pistol88\shop\models\product\ProductSearch;
 use pistol88\shop\models\price\PriceSearch;
+use pistol88\shop\events\ProductEvent;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -56,6 +57,10 @@ class ProductController extends Controller
         $model = $this->module->getService('product');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $module = $this->module;
+            $productEvent = new ProductEvent(['model' => $model]);
+            $this->module->trigger($module::EVENT_PRODUCT_CREATE, $productEvent);
+            
             return $this->redirect(['update', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -75,6 +80,10 @@ class ProductController extends Controller
         $priceModel = $this->module->getService('price');
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $module = $this->module;
+            $productEvent = new ProductEvent(['model' => $model]);
+            $this->module->trigger($module::EVENT_PRODUCT_UPDATE, $productEvent);
+            
             return $this->redirect(['update', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -88,8 +97,13 @@ class ProductController extends Controller
 
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if($model = $this->findModel($id)) {
+            $this->findModel($id)->delete();
 
+            $module = $this->module;
+            $productEvent = new ProductEvent(['model' => $model]);
+            $this->module->trigger($module::EVENT_PRODUCT_DELETE, $productEvent);
+        }
         return $this->redirect(['index']);
     }
 
