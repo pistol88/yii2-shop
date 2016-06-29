@@ -38,9 +38,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <li role="presentation" <?php if(yii::$app->request->get('view') == 'list') echo ' class="active"'; ?>><a href="<?=Url::toRoute(['category/index', 'view' => 'list']);?>">Списком</a></li>
     </ul>
     
-    <br style="clear: both;"></div>
+    <br style="clear: both;">
     <?php
-    
     if(isset($_GET['view']) && $_GET['view'] == 'list') {
         $categories = \kartik\grid\GridView::widget([
             'dataProvider' => $dataProvider,
