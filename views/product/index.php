@@ -14,30 +14,40 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-index">
 
-    <p>
-        <?= Html::a('Добавить товар', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Поступление', Url::toRoute(['/shop/incoming/create']), ['class' => 'btn btn-success']) ?>
-    </p>
-    
-    <div class="export-block">
-        <p><strong>Экспорт</strong></p>
-        <?php
-        $gridColumns = [
-            'id',
-            'code',
-            'category.name',
-            'producer.name',
-            'name',
-            'price',
-            'amount',
-        ];
+    <div class="row">
+        <div class="col-md-2">
+            <?= Html::a('Добавить товар', ['create'], ['class' => 'btn btn-success']) ?>
+        </div>
+        <div class="col-md-2">
+            <?= Html::a('Поступление', Url::toRoute(['/shop/incoming/create']), ['class' => 'btn btn-success']) ?>
+        </div>
+        <div class="col-md-4">
+            <?php
+            $gridColumns = [
+                'id',
+                'code',
+                'category.name',
+                'producer.name',
+                'name',
+                'price',
+                'amount',
+            ];
 
-        echo ExportMenu::widget([
-            'dataProvider' => $dataProvider,
-            'columns' => $gridColumns
-        ]);
-        ?>
+            echo ExportMenu::widget([
+                'dataProvider' => $dataProvider,
+                'columns' => $gridColumns
+            ]);
+            ?>
+        </div>
     </div>
+    
+    <?php if($amount = $dataProvider->query->sum('amount')) { ?>
+        <div class="summary">
+            Всего товаров:
+            <?=$amount;?>
+        </div>
+    <?php } ?>
+    
     <br style="clear: both;"></div>
     <?php
     echo \kartik\grid\GridView::widget([

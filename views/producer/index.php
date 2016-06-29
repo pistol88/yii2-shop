@@ -8,26 +8,26 @@ $this->params['breadcrumbs'][] = $this->title;
 
 \pistol88\shop\assets\BackendAsset::register($this);
 ?>
-<div class="page-index">
+<div class="producer-index">
+    <div class="row">
+        <div class="col-md-2">
+            <?= Html::a('Создать производителя', ['create'], ['class' => 'btn btn-success']) ?>
+        </div>
+        <div class="col-md-4">
+            <?php
+            $gridColumns = [
+                'id',
+                'name',
+            ];
 
-    <p>
-        <?= Html::a('Создать производителя', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <div class="export-block">
-        <p><strong>Экспорт</strong></p>
-        <?php
-        $gridColumns = [
-            'id',
-            'name',
-        ];
-
-        echo ExportMenu::widget([
-            'dataProvider' => $dataProvider,
-            'columns' => $gridColumns
-        ]);
-        ?>
+            echo ExportMenu::widget([
+                'dataProvider' => $dataProvider,
+                'columns' => $gridColumns
+            ]);
+            ?>
+        </div>
     </div>
+
     <br style="clear: both;"></div>
     
     <?= \kartik\grid\GridView::widget([

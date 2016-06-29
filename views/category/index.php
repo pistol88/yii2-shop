@@ -11,30 +11,33 @@ $this->params['breadcrumbs'][] = $this->title;
 \pistol88\shop\assets\BackendAsset::register($this);
 ?>
 <div class="category-index">
+    
+    <div class="row">
+        <div class="col-md-2">
+            <?= Html::a('Создать категорию', ['create'], ['class' => 'btn btn-success']) ?>
+        </div>
+        <div class="col-md-4">
+            <?php
+            $gridColumns = [
+                'id',
+                'name',
+            ];
 
-    <p>
-        <?= Html::a('Создать категорию', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+            echo ExportMenu::widget([
+                'dataProvider' => $dataProvider,
+                'columns' => $gridColumns
+            ]);
+            ?>
+        </div>
+    </div>
 
+    <br style="clear: both;"></div>
+    
     <ul class="nav nav-pills">
         <li role="presentation" <?php if(yii::$app->request->get('view') == 'tree' | yii::$app->request->get('view') == '') echo ' class="active"'; ?>><a href="<?=Url::toRoute(['category/index', 'view' => 'tree']);?>">Деревом</a></li>
         <li role="presentation" <?php if(yii::$app->request->get('view') == 'list') echo ' class="active"'; ?>><a href="<?=Url::toRoute(['category/index', 'view' => 'list']);?>">Списком</a></li>
     </ul>
     
-    <div class="export-block">
-        <p><strong>Экспорт</strong></p>
-        <?php
-        $gridColumns = [
-            'id',
-            'name',
-        ];
-
-        echo ExportMenu::widget([
-            'dataProvider' => $dataProvider,
-            'columns' => $gridColumns
-        ]);
-        ?>
-    </div>
     <br style="clear: both;"></div>
     <?php
     
@@ -64,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         Category::buildTextTree(),
                         ['class' => 'form-control', 'prompt' => 'Категория']
                     ),
-                    'value' => 'category.name'
+                    'value' => 'parent.name'
                 ],
                 ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 125px;']],
             ],
