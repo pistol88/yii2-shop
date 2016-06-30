@@ -59,51 +59,51 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'code',
             [
-				'attribute' => 'images',
-				'format' => 'images',
+                'attribute' => 'images',
+                'format' => 'images',
                 'filter' => false,
-				'content' => function ($image) {
+                'content' => function ($image) {
                     if($image = $image->getImage()->getUrl('50x50')) {
                         return "<img src=\"{$image}\" class=\"thumb\" />";
                     }
-				}
-			],
-			[
-				'label' => 'Цена',
-				'value' => 'price'
-			],
+                }
+            ],
+            [
+                'label' => 'Цена',
+                'value' => 'price'
+            ],
             'amount',
             /*
-			[
-				'attribute' => 'available',
-				'filter' => Html::activeDropDownList(
-					$searchModel,
-					'available',
-					['no' => 'Нет', 'yes' => 'Да'],
-					['class' => 'form-control', 'prompt' => 'Наличие']
-				),
-			],
+            [
+                'attribute' => 'available',
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'available',
+                    ['no' => 'Нет', 'yes' => 'Да'],
+                    ['class' => 'form-control', 'prompt' => 'Наличие']
+                ),
+            ],
             */
-			[
-				'attribute' => 'category_id',
-				'filter' => Html::activeDropDownList(
-					$searchModel,
-					'category_id',
-					Category::buildTextTree(),
-					['class' => 'form-control', 'prompt' => 'Категория']
-				),
-				'value' => 'category.name'
-			],
-			[
-				'attribute' => 'producer_id',
-				'filter' => Html::activeDropDownList(
-					$searchModel,
-					'producer_id',
-					ArrayHelper::map(Producer::find()->all(), 'id', 'name'),
-					['class' => 'form-control', 'prompt' => 'Производитель']
-				),
-				'value' => 'producer.name'
-			],
+            [
+                'attribute' => 'category_id',
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'category_id',
+                    Category::buildTextTree(),
+                    ['class' => 'form-control', 'prompt' => 'Категория']
+                ),
+                'value' => 'category.name'
+            ],
+            [
+                'attribute' => 'producer_id',
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'producer_id',
+                    ArrayHelper::map(Producer::find()->all(), 'id', 'name'),
+                    ['class' => 'form-control', 'prompt' => 'Производитель']
+                ),
+                'value' => 'producer.name'
+            ],
 
             ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 125px;']],
         ],
