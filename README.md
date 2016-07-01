@@ -31,11 +31,9 @@ git clone https://github.com/pistol88/yii2-shop.git
 И подключать через psr-4 секцию composer.json:
 
 ```
-{
-    "autoload": {
-        "psr-4": {
-            "pistol88\\shop\\": "common/modules/pistol88/yii2-shop",
-        }
+"autoload": {
+    "psr-4": {
+        "pistol88\\shop\\": "common/modules/pistol88/yii2-shop"
     }
 }
 ```
