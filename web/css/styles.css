@@ -12,3 +12,24 @@
 .product-form .block {
     padding-bottom: 10px;
 }
+
+.shop-menu {
+    margin-bottom: 20px;
+}
+
+.shop-menu li {
+    border-left: 1px solid #ccc;
+    margin: 0px;
+    float: right;
+}
+
+.shop-menu li a {
+    padding: 4px;
+}
+
+.prices-column .editableform {
+    position: absolute;
+    padding: 2px;
+    background-color: #f4f4f4;
+    margin-left: -30px;
+}

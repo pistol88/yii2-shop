@@ -4,6 +4,7 @@ namespace pistol88\shop\controllers;
 use Yii;
 use pistol88\shop\models\product\ProductSearch;
 use pistol88\shop\models\price\PriceSearch;
+use pistol88\shop\models\PriceType;
 use pistol88\shop\events\ProductEvent;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -55,8 +56,24 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $model = $this->module->getService('product');
-
+        $priceModel = $this->module->getService('price');
+        
+        $priceTypes = PriceType::find()->orderBy('sort DESC')->all();
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            
+            $prices = yii::$app->request->post('Price');
+
+            foreach($prices as $typeId => $price) {
+                $type = PriceType::findOne($typeId);
+                $price = new $priceModel($price);
+                $price->type_id = $typeId;
+                $price->name = $type->name;
+                $price->sort = $type->sort;
+                $price->product_id = $model->id;
+                $price->save();
+            }
+            
             $module = $this->module;
             $productEvent = new ProductEvent(['model' => $model]);
             $this->module->trigger($module::EVENT_PRODUCT_CREATE, $productEvent);
@@ -65,6 +82,8 @@ class ProductController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'priceModel' => $priceModel,
+                'priceTypes' => $priceTypes,
             ]);
         }
     }

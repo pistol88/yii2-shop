@@ -7,6 +7,8 @@ class Module extends \yii\base\Module
 {
     public $adminRoles = ['admin', 'superadmin'];
     public $modelMap = [];
+    public $defaultTypeId = null;
+    public $priceType = null; //callable, возвращающая type_id цены
     public $categoryUrlPrefix = '/shop/category/view';
     public $productUrlPrefix = '/shop/product/view';
     
@@ -27,6 +29,18 @@ class Module extends \yii\base\Module
         }
         
         parent::init();
+    }
+    
+    //возвращает type_id цены, которую стоит отобразить покупателю
+    public function getPriceTypeId($product = null)
+    {
+        if(is_callable($this->priceType))
+        {
+            $priceType = $this->priceType;
+            return $values($product);
+        }
+        
+        return $this->defaultTypeId;
     }
     
     public function getService($key)

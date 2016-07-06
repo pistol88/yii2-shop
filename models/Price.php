@@ -1,11 +1,11 @@
 <?php
 namespace pistol88\shop\models;
 
-use Yii;
-use pistol88\shop\models\Product;
+use yii;
 
 class Price extends \yii\db\ActiveRecord implements \pistol88\cart\interfaces\CartElement 
 {
+    
     public static function tableName()
     {
         return '{{%shop_price}}';
@@ -31,6 +31,7 @@ class Price extends \yii\db\ActiveRecord implements \pistol88\cart\interfaces\Ca
             'code' => 'Артикул',
             'available' => 'Наличие',
             'amount' => 'Остаток',
+            'sort' => 'Приоритет',
         ];
     }
 

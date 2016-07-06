@@ -116,6 +116,15 @@ use pistol88\seo\widgets\SeoForm;
         </div>
     </div>
 
+    <?php if(isset($priceTypes)) { ?>
+        <?php if($priceTypes) { ?>
+            <h3>Цены</h3>
+            <?php $i = 1; foreach($priceTypes as $priceType) { ?>
+                <?= $form->field($priceModel, "[{$priceType->id}]price")->label($priceType->name); ?>
+            <?php $i++; } ?>
+        <?php } ?>
+    <?php } ?>
+    
     <div class="form-group shop-control">
         <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         <?php if(!$model->isNewRecord) { ?>

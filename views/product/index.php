@@ -13,15 +13,15 @@ $this->params['breadcrumbs'][] = $this->title;
 \pistol88\shop\assets\BackendAsset::register($this);
 ?>
 <div class="product-index">
+    <div class="shop-menu">
+        <?=$this->render('../parts/menu');?>
+    </div>
 
     <div class="row">
         <div class="col-md-2">
             <?= Html::a('Добавить товар', ['create'], ['class' => 'btn btn-success']) ?>
         </div>
         <div class="col-md-2">
-            <?= Html::a('Поступление', Url::toRoute(['/shop/incoming/create']), ['class' => 'btn btn-success']) ?>
-        </div>
-        <div class="col-md-4">
             <?php
             $gridColumns = [
                 'id',
@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
     
     <?php if($amount = $dataProvider->query->sum('amount')) { ?>
         <div class="summary">
-            Всего товаров:
+            Всего остатков:
             <?=$amount;?>
         </div>
     <?php } ?>

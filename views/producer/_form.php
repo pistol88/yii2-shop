@@ -9,7 +9,7 @@ use pistol88\seo\widgets\SeoForm;
 
 ?>
 
-<div class="promotion-form">
+<div class="producer-form">
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 

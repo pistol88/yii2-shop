@@ -6,8 +6,10 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use pistol88\shop\models\PriceType;
+use pistol88\shop\models\price\PriceTypeSearch;
 
-class PriceController extends Controller
+class PriceTypeController extends Controller
 {
     public function behaviors()
     {
@@ -31,15 +33,35 @@ class PriceController extends Controller
         ];
     }
 
+    public function actionIndex()
+    {
+        $searchModel = new PriceTypeSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
     public function actionCreate()
     {
-        $model = $this->module->getService('price');
+        $model = new PriceType;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //nothing
+            return $this->redirect(['update', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
-        
-        $this->redirect(Yii::$app->request->referrer);
     }
 
     public function actionUpdate($id)
@@ -54,26 +76,17 @@ class PriceController extends Controller
             ]);
         }
     }
-    
+
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
 
-        $this->redirect(Yii::$app->request->referrer);
+        return $this->redirect(['index']);
     }
-
-	public function actionEditField()
-	{
-		$name = Yii::$app->request->post('name');
-		$value = Yii::$app->request->post('value');
-		$pk = unserialize(base64_decode(Yii::$app->request->post('pk')));
-        $model = $this->module->getService('price');
-		$model::editField($pk, $name, $value);
-	}
 
     protected function findModel($id)
     {
-        $model = $this->module->getService('price');
+        $model = new PriceType;
         
         if (($model = $model::findOne($id)) !== null) {
             return $model;

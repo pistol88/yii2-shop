@@ -1,18 +1,16 @@
 <?php
 use yii\helpers\Html;
 
-$this->title = 'Создать категорию';
-$this->params['breadcrumbs'][] = ['label' => 'Категории', 'url' => ['index']];
+$this->title = 'Создать тип цен';
+$this->params['breadcrumbs'][] = ['label' => 'Типы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \pistol88\shop\assets\BackendAsset::register($this);
 ?>
-<div class="category-create">
+<div class="price-type-create">
     <div class="shop-menu">
         <?=$this->render('../parts/menu');?>
     </div>
     
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

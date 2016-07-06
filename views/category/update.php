@@ -1,17 +1,16 @@
 <?php
-
 use yii\helpers\Html;
-
-/* @var $this yii\web\View */
-/* @var $model pistol88\shop\models\Category */
 
 $this->title = 'Обновить категорию: ' . ' ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Категории', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Обновить';
-
+\pistol88\shop\assets\BackendAsset::register($this);
 ?>
 <div class="category-update">
-
+    <div class="shop-menu">
+        <?=$this->render('../parts/menu');?>
+    </div>
+    
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

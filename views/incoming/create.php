@@ -7,9 +7,14 @@ $this->title = 'Новое поступление';
 $this->params['breadcrumbs'][] = $this->title;
 
 pistol88\shop\assets\CreateIncomingAsset::register($this);
+\pistol88\shop\assets\BackendAsset::register($this);
 ?>
 
 <div class="incoming-create">
+    <div class="shop-menu">
+        <?=$this->render('../parts/menu');?>
+    </div>
+    
     <?php if(Yii::$app->session->hasFlash('success')): ?>
         <div class="alert alert-success" role="alert">
             <?= Yii::$app->session->getFlash('success') ?>

@@ -4,15 +4,15 @@ namespace pistol88\shop\models\price;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use pistol88\shop\models\Price;
+use pistol88\shop\models\PriceType;
 
-class PriceSearch extends Price
+class PriceTypeSearch extends PriceType
 {
     public function rules()
     {
         return [
-            [['id', 'product_id'], 'integer'],
-            [['name', 'available'], 'safe'],
+            [['id', 'sort'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -23,7 +23,7 @@ class PriceSearch extends Price
 
     public function search($params)
     {
-        $query = Price::find()->orderBy('sort DESC');
+        $query = PriceType::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -37,8 +37,6 @@ class PriceSearch extends Price
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'product_id' => $this->product_id,
-            'available' => $this->available,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);

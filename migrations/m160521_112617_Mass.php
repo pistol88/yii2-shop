@@ -42,6 +42,13 @@ class m160521_112616_Mass extends Migration {
                 'sort' => Schema::TYPE_INTEGER . "(11)",
                 ], $tableOptions);
 
+            $this->createTable('{{%shop_price_type}}', [
+                'id' => Schema::TYPE_PK . "",
+                'name' => Schema::TYPE_STRING . "(55) NOT NULL",
+                'sort' => Schema::TYPE_INTEGER . "(11)",
+                'condition' => Schema::TYPE_TEXT . "",
+                ], $tableOptions);
+            
             $this->createIndex('id', '{{%shop_category}}', 'id,parent_id', 0);
             $this->createTable('{{%shop_price}}', [
                 'id' => Schema::TYPE_PK . "",
@@ -49,6 +56,7 @@ class m160521_112616_Mass extends Migration {
                 'name' => Schema::TYPE_STRING . "(155) NOT NULL",
                 'price' => Schema::TYPE_INTEGER . "(11)",
                 'amount' => Schema::TYPE_INTEGER . "(11)",
+                'type_id' => Schema::TYPE_INTEGER . "(11)",
                 'product_id' => Schema::TYPE_INTEGER . "(11) NOT NULL",
                 'available' => "enum('yes','no')" . " DEFAULT 'yes'",
                 ], $tableOptions);
@@ -80,6 +88,10 @@ class m160521_112616_Mass extends Migration {
             
             $this->addForeignKey(
                 'fk_product', '{{%shop_price}}', 'product_id', '{{%shop_product}}', 'id', 'CASCADE', 'CASCADE'
+            );
+            
+            $this->addForeignKey(
+                'fk_type', '{{%shop_price}}', 'type_id', '{{%shop_price_type}}', 'id', 'CASCADE', 'CASCADE'
             );
             
             $this->addForeignKey(
