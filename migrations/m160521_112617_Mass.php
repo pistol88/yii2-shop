@@ -55,6 +55,7 @@ class m160521_112616_Mass extends Migration {
                 'code' => Schema::TYPE_STRING . "(155) NOT NULL",
                 'name' => Schema::TYPE_STRING . "(155) NOT NULL",
                 'price' => Schema::TYPE_INTEGER . "(11)",
+                'sort' => Schema::TYPE_INTEGER . "(11)",
                 'amount' => Schema::TYPE_INTEGER . "(11)",
                 'type_id' => Schema::TYPE_INTEGER . "(11)",
                 'product_id' => Schema::TYPE_INTEGER . "(11) NOT NULL",
