@@ -16,8 +16,8 @@ Yii2-shop
 Если есть необходимость, можно также подтянуть мои другие модули:
 
 * [pistol88/yii2-cart](https://github.com/pistol88/yii2-cart) - корзина
-* [pistol88/yii2-cart](https://github.com/pistol88/yii2-order) - заказ
-* [pistol88/yii2-cart](https://github.com/pistol88/yii2-promocode) - промокоды
+* [pistol88/yii2-order](https://github.com/pistol88/yii2-order) - заказ
+* [pistol88/yii2-promocode](https://github.com/pistol88/yii2-promocode) - промокоды
 
 Установка
 ---------------------------------
