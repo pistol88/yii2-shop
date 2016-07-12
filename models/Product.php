@@ -10,7 +10,7 @@ use yii\db\ActiveQuery;
 
 class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interfaces\Torelate, \pistol88\cart\interfaces\CartElement
 {
-	function behaviors()
+    function behaviors()
     {
         return [
             'images' => [
@@ -41,14 +41,14 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
                 'class' => 'pistol88\field\behaviors\AttachFields',
             ],
         ];
-	}
-	
+    }
+    
     public static function tableName()
     {
         return '{{%shop_product}}';
     }
     
-	public static function Find()
+    public static function Find()
     {
         $return = new ProductQuery(get_called_class());
         $return = $return->with('category');
@@ -122,10 +122,10 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return $this->price;
     }
 
-	public function getCartOptions()
-	{
-		return '';
-	}
+    public function getCartOptions()
+    {
+        return '';
+    }
     
     public function getName()
     {
@@ -170,21 +170,21 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return Url::toRoute([yii::$app->getModule('shop')->productUrlPrefix.'/'.$this->slug]);
     }
 
-	public function getCategory()
+    public function getCategory()
     {
-		return $this->hasOne(Category::className(), ['id' => 'category_id']);
-	}
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
+    }
     
     public function getCategories()
     {
         return $this->hasMany(Category::className(), ['id' => 'category_id'])
              ->viaTable('{{%shop_product_to_category}}', ['product_id' => 'id']);
     }
-	
-	public function getProducer()
+    
+    public function getProducer()
     {
-		return $this->hasOne(Producer::className(), ['id' => 'producer_id']);
-	}
+        return $this->hasOne(Producer::className(), ['id' => 'producer_id']);
+    }
     
     public function afterDelete()
     {

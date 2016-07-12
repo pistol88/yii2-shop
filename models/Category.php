@@ -7,7 +7,7 @@ use yii\helpers\Url;
 
 class Category extends \yii\db\ActiveRecord
 {
-	function behaviors()
+    function behaviors()
     {
         return [
             'images' => [
@@ -24,14 +24,14 @@ class Category extends \yii\db\ActiveRecord
                 'class' => 'pistol88\field\behaviors\AttachFields',
             ],
         ];
-	}
-	
+    }
+    
     public static function tableName()
     {
         return '{{%shop_category}}';
     }
     
-	static function find()
+    static function find()
     {
         return new CategoryQuery(get_called_class());
     }
@@ -60,8 +60,8 @@ class Category extends \yii\db\ActiveRecord
             'description' => 'Описание',
         ];
     }
-	
-	public static function buldTree($parent_id = null)
+    
+    public static function buldTree($parent_id = null)
     {
         $return = [];
         
@@ -79,7 +79,7 @@ class Category extends \yii\db\ActiveRecord
         return $return;
     }
     
-	public static function buildTextTree($id = null, $level = 1, $ban = [])
+    public static function buildTextTree($id = null, $level = 1, $ban = [])
     {
         $return = [];
         
@@ -113,10 +113,10 @@ class Category extends \yii\db\ActiveRecord
         return $this->hasMany(Category::className(), ['parent_id' => 'id']);
     }
 
-	public function getParent()
+    public function getParent()
     {
-		return $this->hasOne(Category::className(), ['id' => 'parent_id']);
-	}
+        return $this->hasOne(Category::className(), ['id' => 'parent_id']);
+    }
     
     public function getLink()
     {

@@ -61,10 +61,10 @@ class Price extends \yii\db\ActiveRecord implements \pistol88\cart\interfaces\Ca
         return $this->price;
     }
 
-	public function getCartOptions()
-	{
-		return '';
-	}
+    public function getCartOptions()
+    {
+        return '';
+    }
     
     public function getProduct()
     {

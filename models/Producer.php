@@ -15,7 +15,7 @@ use Yii;
  */
 class Producer extends \yii\db\ActiveRecord
 {
-	function behaviors() {
+    function behaviors() {
         return [
             'images' => [
                 'class' => 'pistol88\gallery\behaviors\AttachImages',
@@ -31,7 +31,7 @@ class Producer extends \yii\db\ActiveRecord
                 'class' => 'pistol88\field\behaviors\AttachFields',
             ],
         ];
-	}
+    }
     /**
      * @inheritdoc
      */
@@ -61,20 +61,20 @@ class Producer extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Название производителя',
             'text' => 'Текст',
-			'image' => 'Картинка',
-			'slug' => 'SEO Имя',
+            'image' => 'Картинка',
+            'slug' => 'SEO Имя',
         ];
     }
-	
-	 public function getLink() {
+    
+     public function getLink() {
         return Url::toRoute(['/producer/view/', 'slug' => $this->slug]);
     }
-	
-	
-	public function getByProducts($productFind)
-	{
-		$return = new Producer;
-		$productFind = $productFind->select('producer_id');
-		return $return::find()->where(['id' => $productFind]);
-	}
+    
+    
+    public function getByProducts($productFind)
+    {
+        $return = new Producer;
+        $productFind = $productFind->select('producer_id');
+        return $return::find()->where(['id' => $productFind]);
+    }
 }

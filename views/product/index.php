@@ -5,6 +5,7 @@ use yii\helpers\Url;
 use pistol88\shop\models\ProductOption;
 use pistol88\shop\models\Category;
 use pistol88\shop\models\Producer;
+use pistol88\shop\models\Price;
 use kartik\export\ExportMenu;
 
 $this->title = 'Товары';
@@ -45,6 +46,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="summary">
             Всего остатков:
             <?=$amount;?>
+            на сумму
+            <?=$dataProvider->query->sum('amount*price');?>
         </div>
     <?php } ?>
     
