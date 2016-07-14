@@ -46,8 +46,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="summary">
             Всего остатков:
             <?=$amount;?>
-            на сумму
-            <?=$dataProvider->query->sum('amount*price');?>
         </div>
     <?php } ?>
     

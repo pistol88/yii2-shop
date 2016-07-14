@@ -62,14 +62,14 @@ class PriceController extends Controller
         $this->redirect(Yii::$app->request->referrer);
     }
 
-	public function actionEditField()
-	{
-		$name = Yii::$app->request->post('name');
-		$value = Yii::$app->request->post('value');
-		$pk = unserialize(base64_decode(Yii::$app->request->post('pk')));
+    public function actionEditField()
+    {
+        $name = Yii::$app->request->post('name');
+        $value = Yii::$app->request->post('value');
+        $pk = unserialize(base64_decode(Yii::$app->request->post('pk')));
         $model = $this->module->getService('price');
-		$model::editField($pk, $name, $value);
-	}
+        $model::editField($pk, $name, $value);
+    }
 
     protected function findModel($id)
     {

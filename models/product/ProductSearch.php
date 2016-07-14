@@ -48,14 +48,14 @@ class ProductSearch extends Product
             'id' => $this->id,
             'category_id' => $this->category_id,
             'available' => $this->available,
-			'producer_id' => $this->producer_id,
+            'producer_id' => $this->producer_id,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'text', $this->text])
             ->andFilterWhere(['like', 'code', $this->code])
             ->andFilterWhere(['like', 'short_text', $this->short_text])
-			->andFilterWhere(['like', 'category_id', $this->category_id]);
+            ->andFilterWhere(['like', 'category_id', $this->category_id]);
 
         return $dataProvider;
     }
