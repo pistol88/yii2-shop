@@ -34,7 +34,8 @@
         "zelenin/yii2-slug-behavior": "~1.5.1",
         "kartik-v/yii2-export": "@dev",
         "kartik-v/yii2-mpdf": "@dev",
-        "trntv/yii2-file-kit": "@stable"
+        "trntv/yii2-file-kit": "@stable",
+        "league/flysystem": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "*",
