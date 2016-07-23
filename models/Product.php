@@ -15,7 +15,7 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return [
             'images' => [
                 'class' => 'pistol88\gallery\behaviors\AttachImages',
-                'inAttribute' => 'images',
+                'mode' => 'gallery',
             ],
             'slug' => [
                 'class' => 'Zelenin\yii\behaviors\Slug',

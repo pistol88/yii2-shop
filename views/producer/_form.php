@@ -30,7 +30,7 @@ use pistol88\seo\widgets\SeoForm;
         ]
     ) ?>
 	
-    <?=Gallery::widget(['model' => $model, 'form' => $form, 'mode' => 'single', 'inAttribute' => 'image']); ?>
+    <?=Gallery::widget(['model' => $model]); ?>
 
     <?= SeoForm::widget([
         'model' => $model, 

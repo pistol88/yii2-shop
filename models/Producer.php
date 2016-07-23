@@ -4,22 +4,13 @@ namespace pistol88\shop\models;
 use yii\helpers\Url;
 use Yii;
 
-/**
- * This is the model class for table "producer".
- *
- * @property integer $id
- * @property string $name
- * @property string $image
- * @property string $text
- * @property string $slug
- */
 class Producer extends \yii\db\ActiveRecord
 {
     function behaviors() {
         return [
             'images' => [
                 'class' => 'pistol88\gallery\behaviors\AttachImages',
-                'inAttribute' => 'image',
+                'mode' => 'single',
             ],
             'slug' => [
                 'class' => 'Zelenin\yii\behaviors\Slug',

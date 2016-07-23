@@ -12,7 +12,7 @@ class Category extends \yii\db\ActiveRecord
         return [
             'images' => [
                 'class' => 'pistol88\gallery\behaviors\AttachImages',
-                'inAttribute' => 'image',
+                'mode' => 'single',
             ],
             'slug' => [
                 'class' => 'Zelenin\yii\behaviors\Slug',
