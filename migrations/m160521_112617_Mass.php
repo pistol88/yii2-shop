@@ -77,7 +77,11 @@ class m160521_112617_Mass extends Migration {
                 'category_id' => Schema::TYPE_INTEGER . "(11) NOT NULL",
                 ], $tableOptions);
 
-            
+            $this->createTable( '{{%shop_incoming}}',[
+                'id' => Schema::TYPE_PK . "",
+                'date' => Schema::TYPE_INTEGER . "(11) NOT NULL",
+                'content' => Schema::TYPE_TEXT . "",
+            ], $tableOptions);
             
             $this->addForeignKey(
                 'fk_category', '{{%shop_product}}', 'category_id', '{{%shop_category}}', 'id', 'CASCADE', 'CASCADE'
