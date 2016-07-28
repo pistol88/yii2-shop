@@ -120,7 +120,7 @@ class m160521_112617_Mass extends Migration {
             $this->dropTable('{{%shop_price}}');
             $this->dropTable('{{%shop_producer}}');
             $this->dropTable('{{%shop_product_to_category}}');
-            $transaction->commit();
+            $this->dropTable('{{%shop_incoming}}');
         } catch (Exception $e) {
             echo 'Catch Exception ' . $e->getMessage() . ' ';
         }
