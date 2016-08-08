@@ -49,6 +49,11 @@ class m160521_112617_Mass extends Migration {
                 'condition' => Schema::TYPE_TEXT . "",
                 ], $tableOptions);
             
+            $this->insert('{{%shop_price_type}}', [
+                'id' => '1',
+                'name' => 'Основная цена',
+            ]);
+            
             $this->createIndex('id', '{{%shop_category}}', 'id,parent_id', 0);
             $this->createTable('{{%shop_price}}', [
                 'id' => Schema::TYPE_PK . "",

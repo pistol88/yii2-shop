@@ -62,16 +62,16 @@ class ProductController extends Controller
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             
-            $prices = yii::$app->request->post('Price');
-
-            foreach($prices as $typeId => $price) {
-                $type = PriceType::findOne($typeId);
-                $price = new $priceModel($price);
-                $price->type_id = $typeId;
-                $price->name = $type->name;
-                $price->sort = $type->sort;
-                $price->product_id = $model->id;
-                $price->save();
+            if($prices = yii::$app->request->post('Price')) {
+                foreach($prices as $typeId => $price) {
+                    $type = PriceType::findOne($typeId);
+                    $price = new $priceModel($price);
+                    $price->type_id = $typeId;
+                    $price->name = $type->name;
+                    $price->sort = $type->sort;
+                    $price->product_id = $model->id;
+                    $price->save();
+                }
             }
             
             $module = $this->module;
