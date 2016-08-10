@@ -3,7 +3,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use kartik\export\ExportMenu;
 
-$this->title = 'Производители';
+$this->title = 'Типы цен';
 $this->params['breadcrumbs'][] = $this->title;
 
 \pistol88\shop\assets\BackendAsset::register($this);
