@@ -89,7 +89,7 @@ Yii::setAlias('@storageUrl','/frontend/web/images');
             'class' => 'pistol88\relations\Module',
             'fields' => ['code'],
         ],
-        'yii2images' => [
+        'gallery' => [
             'class' => 'pistol88\gallery\Module',
             'imagesStorePath' => dirname(dirname(__DIR__)).'/storage/web/images/store',
             'imagesCachePath' => dirname(dirname(__DIR__)).'/storage/web/images/cache',
