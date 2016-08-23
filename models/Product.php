@@ -110,15 +110,18 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return $this;
     }
     
-    public function getCartId() {
+    public function getCartId()
+    {
         return $this->id;
     }
     
-    public function getCartName() {
+    public function getCartName()
+    {
         return $this->name;
     }
     
-    public function getCartPrice() {
+    public function getCartPrice()
+    {
         return $this->price;
     }
 
@@ -196,7 +199,8 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
     }
     
 
-    public function afterSave($insert, $changedAttributes) {
+    public function afterSave($insert, $changedAttributes)
+    {
         parent::afterSave($insert, $changedAttributes);
 
         if(!empty($this->category_id) && !empty($this->id)) {
