@@ -147,6 +147,13 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return $return;
     }
     
+    public function getModifications()
+    {
+        $return = $this->hasMany(Modification::className(), ['product_id' => 'id'])->orderBy('id DESC');
+
+        return $return;
+    }
+    
     public function getPrice($type = 'lower')
     {
         $price = $this->hasOne(Price::className(), ['product_id' => 'id']);

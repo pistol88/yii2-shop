@@ -95,6 +95,75 @@ $this->params['breadcrumbs'][] = 'Обновить';
                     </div>
                 <?php } ?>
                 
+                <div class="block">
+                    <h2>Модификации</h2>
+                    <?php if($modificationDataProvider->getCount()) { ?>
+                        <?= GridView::widget([
+                            'dataProvider' => $modificationDataProvider,
+                            'filterModel' => $searchModificationModel,
+                            'columns' => [
+                                //['class' => 'yii\grid\SerialColumn', 'options' => ['style' => 'width: 20px;']],
+                                ['attribute' => 'id', 'filter' => false, 'options' => ['style' => 'width: 25px;']],
+                                [
+                                    'class' => EditableColumn::className(),
+                                    'attribute' => 'name',
+                                    'url' => ['price/edit-field'],
+                                    'type' => 'text',
+                                    'filter' => false,
+                                    'editableOptions' => [
+                                        'mode' => 'inline',
+                                    ],
+                                    'options' => ['style' => 'width: 75px;']
+                                ],
+                                [
+                                    'class' => EditableColumn::className(),
+                                    'attribute' => 'sort',
+                                    'url' => ['price/edit-field'],
+                                    'type' => 'text',
+                                    'editableOptions' => [
+                                        'mode' => 'inline',
+                                    ],
+                                    'options' => ['style' => 'width: 49px;']
+                                ],
+                                [
+                                    'class' => EditableColumn::className(),
+                                    'attribute' => 'available',
+                                    'url' => ['price/edit-field'],
+                                    'type' => 'select',
+                                    'editableOptions' => [
+                                        'mode' => 'inline',
+                                        'source' => ['yes', 'no'],
+                                    ],
+                                    'filter' => false, /*Html::activeDropDownList(
+                                        $searchModel,
+                                        'available',
+                                        ['no' => 'Нет', 'yes' => 'Да'],
+                                        ['class' => 'form-control', 'prompt' => 'Наличие']
+                                    ),*/
+                                    'contentOptions' => ['style' => 'width: 27px;']
+                                ],
+                                [
+                                    'class' => EditableColumn::className(),
+                                    'attribute' => 'price',
+                                    'url' => ['price/edit-field'],
+                                    'type' => 'text',
+                                    'editableOptions' => [
+                                        'mode' => 'inline',
+                                    ],
+                                    'options' => ['style' => 'width: 40px;']
+                                ],
+                                ['class' => 'yii\grid\ActionColumn', 'controller' => 'price', 'template' => '{delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 30px;']],
+                            ],
+                        ]); ?>
+                    <?php } else { ?>
+                        <p style="color: #ccc;">Модификации не добавлены.</p>
+                    <?php } ?>
+                    <?= $this->render('modification/_form', [
+                        'model' => $modificationModel,
+                        'productModel' => $model,
+                    ]) ?>
+                </div>
+                    
                 <?php if($fieldPanel = \pistol88\field\widgets\Choice::widget(['model' => $model])) { ?>
                     <div class="block">
                         <h2>Прочее</h2>

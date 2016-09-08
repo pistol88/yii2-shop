@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 ?>
-<a href="#" class="btn btn-success" onclick="$('.product-add-price-form').toggle(); return false;">Добавить <span class="glyphicon glyphicon-plus add-price"></span></a>
-<div class="product-add-price-form" style="display: none;">
+<a href="#" class="btn btn-success" onclick="$('.product-add-modification-form').toggle(); return false;">Добавить <span class="glyphicon glyphicon-plus add-price"></span></a>
+<div class="product-add-modification-form" style="display: none;">
     
-    <?php $form = ActiveForm::begin(['action' => Url::toRoute(['price/create'])]); ?>
+    <?php $form = ActiveForm::begin(['action' => Url::toRoute(['modification/create'])]); ?>
 
     <?= $form->field($model, 'product_id')->textInput(['type' => 'hidden', 'value' => $productModel->id])->label(false) ?>
     
-    <?= $form->field($model, 'name')->textInput(['value' => $model->name?$model->name:'Основная цена']) ?>
+    <?= $form->field($model, 'name')->textInput(['placeholder' => 'Наименование']) ?>
 
     <?= $form->field($model, 'price')->textInput() ?>
 
