@@ -160,7 +160,7 @@ class ProductController extends Controller
         
         die(json_encode($json));
     }
-
+    
     protected function findModel($id)
     {
         $model = $this->module->getService('product');

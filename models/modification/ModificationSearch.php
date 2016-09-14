@@ -42,7 +42,9 @@ class ModificationSearch extends Modification
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
-
+        $query->andFilterWhere(['like', 'price', $this->price]);
+        $query->andFilterWhere(['like', 'sort', $this->sort]);
+        
         return $dataProvider;
     }
 }

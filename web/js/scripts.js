@@ -4,7 +4,7 @@ if (typeof pistol88 == "undefined" || !pistol88) {
 
 pistol88.shop = {
     init: function() {
-
+        
     },
 };
 

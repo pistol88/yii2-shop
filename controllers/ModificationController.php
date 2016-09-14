@@ -2,6 +2,7 @@
 namespace pistol88\shop\controllers;
 
 use Yii;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -31,12 +32,45 @@ class ModificationController extends Controller
         ];
     }
 
+    public function actionAddPopup($productId)
+    {
+        $this->layout = 'mini';
+        
+        $model = $this->module->getService('modification');
+        $model->product_id = (int)$productId;
+        $model->available = 'yes';
+        
+        $productModel = $this->module->getService('product');
+        $productModel = $productModel::findOne($productId);
+        
+        if (!$productModel) {
+            throw new NotFoundHttpException('The requested product does not exist.');
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+            'module' => $module,
+            'productModel' => $productModel
+        ]);
+    }
+    
     public function actionCreate()
     {
-        $model = $this->module->getService('price');
+        $model = $this->module->getService('modification');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //nothing
+            $filterValue = yii::$app->request->post('filterValue');
+            $model->filter_values = [];
+            foreach($filterValue as $filterId => $variantId) {
+                $model->filter_values[$filterId] = $variantId;
+            }
+            $model->filter_values = serialize($model->filter_values);
+            
+            if($model->save()) {
+                yii::$app->session->setFlash('modification-success-added', 'Модификация успешно добавлена', false);
+            }
+            
+            return '<script>parent.document.location = "'.Url::to(['/shop/product/update', 'id' => $model->product_id]).'";</script>';
         }
         
         $this->redirect(Yii::$app->request->referrer);

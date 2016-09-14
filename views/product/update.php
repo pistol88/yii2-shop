@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\grid\GridView;
 use dosamigos\grid\EditableColumn;
 
@@ -21,7 +22,7 @@ $this->params['breadcrumbs'][] = 'Обновить';
         </div>
         <div class="col-lg-6 prices-column">
             <div class="stickyeah-no">
-                <h2>Цены</h2>
+                <h3>Цены</h3>
                 <?php if($dataProvider->getCount()) { ?>
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
@@ -96,7 +97,12 @@ $this->params['breadcrumbs'][] = 'Обновить';
                 <?php } ?>
                 
                 <div class="block">
-                    <h2>Модификации</h2>
+                    <h3>Модификации</h3>
+                    <?php if(yii::$app->session->hasFlash('modification-success-added')) { ?>
+                        <div class="alert alert-success" role="alert">
+                            <?= yii::$app->session->getFlash('modification-success-added') ?>
+                        </div>
+                    <?php } ?>
                     <?php if($modificationDataProvider->getCount()) { ?>
                         <?= GridView::widget([
                             'dataProvider' => $modificationDataProvider,
@@ -107,9 +113,8 @@ $this->params['breadcrumbs'][] = 'Обновить';
                                 [
                                     'class' => EditableColumn::className(),
                                     'attribute' => 'name',
-                                    'url' => ['price/edit-field'],
+                                    'url' => ['/shop/modification/edit-field'],
                                     'type' => 'text',
-                                    'filter' => false,
                                     'editableOptions' => [
                                         'mode' => 'inline',
                                     ],
@@ -118,7 +123,7 @@ $this->params['breadcrumbs'][] = 'Обновить';
                                 [
                                     'class' => EditableColumn::className(),
                                     'attribute' => 'sort',
-                                    'url' => ['price/edit-field'],
+                                    'url' => ['/shop/modification/edit-field'],
                                     'type' => 'text',
                                     'editableOptions' => [
                                         'mode' => 'inline',
@@ -128,7 +133,7 @@ $this->params['breadcrumbs'][] = 'Обновить';
                                 [
                                     'class' => EditableColumn::className(),
                                     'attribute' => 'available',
-                                    'url' => ['price/edit-field'],
+                                    'url' => ['/shop/modification/edit-field'],
                                     'type' => 'select',
                                     'editableOptions' => [
                                         'mode' => 'inline',
@@ -145,28 +150,42 @@ $this->params['breadcrumbs'][] = 'Обновить';
                                 [
                                     'class' => EditableColumn::className(),
                                     'attribute' => 'price',
-                                    'url' => ['price/edit-field'],
+                                    'url' => ['/shop/modification/edit-field'],
                                     'type' => 'text',
                                     'editableOptions' => [
                                         'mode' => 'inline',
                                     ],
                                     'options' => ['style' => 'width: 40px;']
                                 ],
-                                ['class' => 'yii\grid\ActionColumn', 'controller' => 'price', 'template' => '{delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 30px;']],
+                                ['class' => 'yii\grid\ActionColumn', 'controller' => 'modification', 'template' => '{delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 30px;']],
                             ],
                         ]); ?>
                     <?php } else { ?>
                         <p style="color: #ccc;">Модификации не добавлены.</p>
                     <?php } ?>
-                    <?= $this->render('modification/_form', [
-                        'model' => $modificationModel,
-                        'productModel' => $model,
-                    ]) ?>
+
+                    <p><a href="#modificationModal" data-toggle="modal" data-target="#modificationModal" class="btn btn-success add-product-modification">Добавить <span class="glyphicon glyphicon-plus add-price"></span></a></p>
+                    <div class="modal fade" id="modificationModal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Товары</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <iframe src="<?=Url::toRoute(['/shop/modification/add-popup', 'productId' => $model->id]);?>" id="modification-add-window"></iframe>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                    
+
                 <?php if($fieldPanel = \pistol88\field\widgets\Choice::widget(['model' => $model])) { ?>
                     <div class="block">
-                        <h2>Прочее</h2>
+                        <h3>Прочее</h3>
                         <?=$fieldPanel;?>
                     </div>
                 <?php } ?>
