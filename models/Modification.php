@@ -28,6 +28,12 @@ class Modification extends \yii\db\ActiveRecord implements \pistol88\cart\interf
             'seo' => [
                 'class' => 'pistol88\seo\behaviors\SeoFields',
             ],
+            'time' => [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'create_time',
+                'updatedAtAttribute' => 'update_time',
+                'value' => new Expression('NOW()'),
+            ],
         ];
     }
     
@@ -39,9 +45,9 @@ class Modification extends \yii\db\ActiveRecord implements \pistol88\cart\interf
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['sort', 'amount'], 'integer'],
-            [['name', 'available', 'code'], 'string'],
+            [['name', 'product_id'], 'required'],
+            [['sort', 'amount', 'product_id'], 'integer'],
+            [['name', 'available', 'code', 'create_time', 'update_time', 'filter_values'], 'string'],
             [['name'], 'string', 'max' => 55],
             [['slug'], 'string', 'max' => 88]
         ];
@@ -51,6 +57,7 @@ class Modification extends \yii\db\ActiveRecord implements \pistol88\cart\interf
     {
         return [
             'id' => 'ID',
+            'product_id' => 'Товар',
             'name' => 'Название',
             'code' => 'Код (актикул)',
             'images' => 'Картинки',
@@ -58,6 +65,9 @@ class Modification extends \yii\db\ActiveRecord implements \pistol88\cart\interf
             'sort' => 'Сортировка',
             'slug' => 'СЕО-имя',
             'amount' => 'Количество',
+            'create_time' => 'Дата создания',
+            'update_time' => 'Дата обновления',
+            'filter_values' => 'Сочетание значений фильтров',
         ];
     }
     
