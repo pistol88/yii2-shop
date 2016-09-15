@@ -157,7 +157,7 @@ $this->params['breadcrumbs'][] = 'Обновить';
                                     ],
                                     'options' => ['style' => 'width: 40px;']
                                 ],
-                                ['class' => 'yii\grid\ActionColumn', 'controller' => 'modification', 'template' => '{delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 30px;']],
+                                ['class' => 'yii\grid\ActionColumn', 'controller' => 'modification', 'template' => '{update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 30px;']],
                             ],
                         ]); ?>
                     <?php } else { ?>

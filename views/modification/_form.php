@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 
 ?>
 <div class="product-add-modification-form">
-    <?php $form = ActiveForm::begin(['action' => Url::toRoute(['/shop/modification/create'])]); ?>
+    <?php $form = ActiveForm::begin(); ?>
     
     <fieldset>
         <legend>1. Выберите параметры модификации</legend>
@@ -47,7 +47,7 @@ use yii\widgets\ActiveForm;
                                 <select id="filterValue<?=$filter-id;?>" name="filterValue[<?=$filter-id;?>]">
                                     <option value="">-</option>
                                     <?php foreach($variants as $variant) { ?>
-                                        <option value="<?=$variant->id;?>"><?=$variant->value;?></option>
+                                        <option <?php if(in_array($variant->id, $model->filtervariants)) echo ' selected="selected"'; ?> value="<?=$variant->id;?>"><?=$variant->value;?></option>
                                     <?php } ?>
                                 </select>
                             </p>

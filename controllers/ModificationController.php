@@ -37,6 +37,12 @@ class ModificationController extends Controller
         $this->layout = 'mini';
         
         $model = $this->module->getService('modification');
+        
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            yii::$app->session->setFlash('modification-success-added', 'Модификация успешно добавлена', false);            
+            return '<script>parent.document.location = "'.Url::to(['/shop/product/update', 'id' => $model->product_id]).'";</script>';
+        }
+
         $model->product_id = (int)$productId;
         $model->available = 'yes';
         
@@ -59,18 +65,7 @@ class ModificationController extends Controller
         $model = $this->module->getService('modification');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $filterValue = yii::$app->request->post('filterValue');
-            $model->filter_values = [];
-            foreach($filterValue as $filterId => $variantId) {
-                $model->filter_values[$filterId] = $variantId;
-            }
-            $model->filter_values = serialize($model->filter_values);
-            
-            if($model->save()) {
-                yii::$app->session->setFlash('modification-success-added', 'Модификация успешно добавлена', false);
-            }
-            
-            return '<script>parent.document.location = "'.Url::to(['/shop/product/update', 'id' => $model->product_id]).'";</script>';
+            $this->redirect(Yii::$app->request->referrer);
         }
         
         $this->redirect(Yii::$app->request->referrer);
@@ -83,7 +78,11 @@ class ModificationController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['update', 'id' => $model->id]);
         } else {
+            $productModel = $model->product;
+            
             return $this->render('update', [
+                'productModel' => $productModel,
+                'module' => $this->module,
                 'model' => $model,
             ]);
         }

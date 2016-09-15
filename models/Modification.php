@@ -75,6 +75,19 @@ class Modification extends \yii\db\ActiveRecord implements \pistol88\cart\interf
         ];
     }
     
+    public function getFiltervariants()
+    {
+        $return = [];
+        
+        if($selected = unserialize($this->filter_values)) {
+            foreach($selected as $filter => $value) {
+                $return[] = $value;
+            }
+        }
+        
+        return $return;
+    }
+    
     public function getId()
     {
         return $this->id;
@@ -155,5 +168,21 @@ class Modification extends \yii\db\ActiveRecord implements \pistol88\cart\interf
         }
         
         return null;
+    }
+    
+    public function beforeValidate()
+    {
+        if($filterValue = yii::$app->request->post('filterValue')) {
+            $filter_values = [];
+            foreach($filterValue as $filterId => $variantId) {
+                $filter_values[$filterId] = $variantId;
+            }
+
+            $this->filter_values = serialize($filter_values);
+        } else {
+            $this->filter_values = serialize([]);
+        }
+
+        return parent::beforeValidate();
     }
 }
