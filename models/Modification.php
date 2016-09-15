@@ -185,4 +185,11 @@ class Modification extends \yii\db\ActiveRecord implements \pistol88\cart\interf
 
         return parent::beforeValidate();
     }
+    
+    public static function editField($id, $name, $value) 
+    {
+        $setting = Modification::findOne($id);
+        $setting->$name = $value;
+        $setting->save();
+    }
 }

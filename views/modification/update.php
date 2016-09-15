@@ -9,7 +9,7 @@ $this->params['breadcrumbs'][] = ['label' => $productModel->name, 'url' => ['/sh
 $this->params['breadcrumbs'][] = 'Модификация';
 $this->params['breadcrumbs'][] = 'Обновить';
 
-\pistol88\shop\assets\BackendAsset::register($this);
+\pistol88\shop\assets\ModificationConstructAsset::register($this);
 ?>
 <div class="product-modification-update">
     <div class="row">

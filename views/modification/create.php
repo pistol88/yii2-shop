@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 
 $this->title = 'Добавить модификацию';
-\pistol88\shop\assets\BackendAsset::register($this);
+\pistol88\shop\assets\ModificationConstructAsset::register($this);
 ?>
 <div class="product-modification-create">
 

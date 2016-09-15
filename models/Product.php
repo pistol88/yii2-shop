@@ -127,7 +127,21 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
 
     public function getCartOptions()
     {
-        return '';
+        $options = [];
+        
+        if($filters = $this->getFilters()) {
+            foreach($filters as $filter) {
+                if($variants = $filter->variants) {
+                    $options[$filter->id]['name'] = $filter->name;
+                    foreach($variants as $variant) {
+                        $options[$filter->id]['variants'][$variant->id] = $variant->value;
+                    }
+                }
+            }
+        }
+        
+        return $options;
+        //return ['Цвет' => ['Красный', 'Белый', 'Синий'], 'Размер' => ['XXL']];
     }
     
     public function getName()
