@@ -121,6 +121,7 @@ Yii::setAlias('@storageUrl','/frontend/web/images');
 
 Использование
 ---------------------------------
+
 * ?r=shop/product - продукты
 * ?r=shop/category - категории
 * ?r=shop/producer - производители
@@ -129,4 +130,67 @@ Yii::setAlias('@storageUrl','/frontend/web/images');
 
 Виджеты
 ---------------------------------
-Виджеты в разработке.
+
+* pistol88\shop\widgets\ShowPrice - передается 'model', выводит цену. Связан с pistol88\cart\widgets\ChangeOptions через jQuery триггер и может определять, какая модификация выбрана и динамически менять цену.
+
+Пример карточки товара со всеми виджетами магазина и корзины, которые работают сообща и динамически меняют данные друг-друга.
+
+
+```
+<?php
+use pistol88\shop\widgets\ShowPrice;
+use pistol88\cart\widgets\BuyButton;
+use pistol88\cart\widgets\TruncateButton;
+use pistol88\cart\widgets\CartInformer;
+use pistol88\cart\widgets\ElementsList;
+use pistol88\cart\widgets\ChangeCount;
+use pistol88\cart\widgets\ChangeOptions;
+
+$product = \pistol88\shop\models\Product::findOne(1); //from controller
+?>
+<div class="site-index">
+    <h1><?=$product->name;?></h1>
+    
+    <h2>Shop</h2>
+    <div class="block row">
+        <h3>ShowPrice</h3>
+        <?=ShowPrice::widget(['model' => $product]);?>
+    </div>
+    
+    <h2>Cart</h2>
+    <div class="block row">
+        <div class="col-md-3">
+            <h3>ChangeCount</h3>
+            <?=ChangeCount::widget(['model' => $product]);?>
+        </div>
+        <div class="col-md-3">
+            <h3>ChangeOptions</h3>
+            <?=ChangeOptions::widget(['model' => $product]);?>
+        </div>
+        <div class="col-md-3">
+            <h3>BuyButton</h3>
+            <?=BuyButton::widget(['model' => $product]);?>
+        </div>
+        <div class="col-md-3">
+            <h3>TruncateButton</h3>
+            <?=TruncateButton::widget();?>
+        </div>
+        <div class="col-md-3">
+            <h3>CartInformer</h3>
+            <?=CartInformer::widget();?>
+        </div>
+        <div class="col-md-3">
+            <h3>ElementsList</h3>
+            <?=ElementsList::widget(['type' => 'dropdown']);?>
+        </div>
+    </div>
+    
+    <style>
+        .block {
+            border: 2px solid blue;
+        }
+    </style>
+    
+</div>
+
+```
