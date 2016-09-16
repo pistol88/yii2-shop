@@ -21,7 +21,8 @@ class m160521_112617_Mass extends Migration {
                 'related_products' => Schema::TYPE_TEXT . " COMMENT 'PHP serialize'",
                 'name' => Schema::TYPE_STRING . "(200) NOT NULL",
                 'code' => Schema::TYPE_STRING . "(155)",
-                'text' => Schema::TYPE_TEXT . " NOT NULL",
+                'price' => Schema::TYPE_DECIMAL . "(11, 2)",
+                'text' => Schema::TYPE_TEXT . " ",
                 'short_text' => Schema::TYPE_STRING . "(255)",
                 'images' => Schema::TYPE_TEXT . "",
                 'available' => "enum('yes','no')" . " DEFAULT 'yes'",
@@ -32,6 +33,22 @@ class m160521_112617_Mass extends Migration {
 
             $this->createIndex('category_id', '{{%shop_product}}', 'category_id', 0);
             $this->createIndex('producer_id', '{{%shop_product}}', 'producer_id', 0);
+            
+            $this->createTable('{{%shop_product_modification}}', [
+                'id' => Schema::TYPE_PK . "",
+                'amount' => Schema::TYPE_INTEGER . "(11)",
+                'product_id' => Schema::TYPE_INTEGER . "(11) NOT NULL",
+                'name' => Schema::TYPE_STRING . "(200) NOT NULL",
+                'code' => Schema::TYPE_STRING . "(155)",
+                'images' => Schema::TYPE_TEXT . "",
+                'available' => "enum('yes','no')" . " DEFAULT 'yes'",
+                'sort' => Schema::TYPE_INTEGER . "(11)",
+                'slug' => Schema::TYPE_STRING . "(255)",
+                'create_time' => Schema::TYPE_DATETIME,
+                'update_time' => Schema::TYPE_DATETIME,
+                'filter_values' => Schema::TYPE_TEXT,
+                ], $tableOptions);
+
             $this->createTable('{{%shop_category}}', [
                 'id' => Schema::TYPE_PK . "",
                 'parent_id' => Schema::TYPE_INTEGER . "(11)",
@@ -59,7 +76,7 @@ class m160521_112617_Mass extends Migration {
                 'id' => Schema::TYPE_PK . "",
                 'code' => Schema::TYPE_STRING . "(155) NOT NULL",
                 'name' => Schema::TYPE_STRING . "(155) NOT NULL",
-                'price' => Schema::TYPE_INTEGER . "(11)",
+                'price' => Schema::TYPE_DECIMAL . "(11, 2)",
                 'sort' => Schema::TYPE_INTEGER . "(11)",
                 'amount' => Schema::TYPE_INTEGER . "(11)",
                 'type_id' => Schema::TYPE_INTEGER . "(11)",
@@ -106,6 +123,10 @@ class m160521_112617_Mass extends Migration {
             
             $this->addForeignKey(
                 'fk_category', '{{%shop_product_to_category}}', 'category_id', '{{%shop_category}}', 'id', 'CASCADE', 'CASCADE'
+            );
+            
+            $this->addForeignKey(
+                'fk_product', '{{%shop_product_modification}}', 'product_id', '{{%shop_product}}', 'id', 'CASCADE', 'CASCADE'
             );
             
             $this->addForeignKey(

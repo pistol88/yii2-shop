@@ -105,6 +105,49 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return $this->save(false);
     }
     
+    public function setPrice($price)
+    {
+        if($priceModel = $this->getPriceModel()) {
+            $priceModel->price = $price;
+            return $priceModel->save(false);
+        }
+        
+        return false;
+    }
+    
+    public function getPriceModel($type = 'lower')
+    {
+        $price = $this->hasOne(Price::className(), ['product_id' => 'id']);
+        
+        if($type == 'lower') {
+            $price = $price->orderBy('price ASC')->one();
+        } elseif($type) {
+            $price = $price->where(['type_id' => $type])->one();
+        } elseif($defaultType = yii::$app->getModule('shop')->getPriceTypeId($this)) {
+            $price = $price->where(['type_id' => $defaultType])->one();
+        } else {
+            $price = $price->orderBy('price DESC')->one();
+        }
+        
+        return $price;
+    }
+    
+    public function getPrices()
+    {
+        $return = $this->hasMany(Price::className(), ['product_id' => 'id'])->orderBy('price ASC');
+
+        return $return;
+    }
+
+    public function getPrice($type = 'lower')
+    {
+        if($price = $this->getPriceModel($type)) {
+            return $price->price;
+        }
+        
+        return null;
+    }
+    
     public function getProduct()
     {
         return $this;
@@ -127,7 +170,21 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
 
     public function getCartOptions()
     {
-        return '';
+        $options = [];
+        
+        if($filters = $this->getFilters()) {
+            foreach($filters as $filter) {
+                if($variants = $filter->variants) {
+                    $options[$filter->id]['name'] = $filter->name;
+                    foreach($variants as $variant) {
+                        $options[$filter->id]['variants'][$variant->id] = $variant->value;
+                    }
+                }
+            }
+        }
+        
+        return $options;
+        //return ['Цвет' => ['Красный', 'Белый', 'Синий'], 'Размер' => ['XXL']];
     }
     
     public function getName()
@@ -139,35 +196,14 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
     {
         return $this;
     }
-    
-    public function getPrices()
+
+    public function getModifications()
     {
-        $return = $this->hasMany(Price::className(), ['product_id' => 'id'])->orderBy('price ASC');
+        $return = $this->hasMany(Modification::className(), ['product_id' => 'id'])->orderBy('sort DESC, id DESC');
 
         return $return;
     }
-    
-    public function getPrice($type = 'lower')
-    {
-        $price = $this->hasOne(Price::className(), ['product_id' => 'id']);
-        
-        if($type == 'lower') {
-            $price = $price->orderBy('price ASC')->one();
-        } elseif($type) {
-            $price = $price->where(['type_id' => $type])->one();
-        } elseif($defaultType = yii::$app->getModule('shop')->getPriceTypeId($this)) {
-            $price = $price->where(['type_id' => $defaultType])->one();
-        } else {
-            $price = $price->orderBy('price DESC')->one();
-        }
-        
-        if($price) {
-            return $price->price;
-        }
-        
-        return null;
-    }
-    
+
     public function getLink()
     {
         return Url::toRoute([yii::$app->getModule('shop')->productUrlPrefix.'/'.$this->slug]);

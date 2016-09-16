@@ -4,6 +4,7 @@ namespace pistol88\shop\controllers;
 use Yii;
 use pistol88\shop\models\product\ProductSearch;
 use pistol88\shop\models\price\PriceSearch;
+use pistol88\shop\models\modification\ModificationSearch;
 use pistol88\shop\models\PriceType;
 use pistol88\shop\events\ProductEvent;
 use yii\web\Controller;
@@ -98,6 +99,13 @@ class ProductController extends Controller
         $dataProvider = $searchModel->search($typeParams);
         $priceModel = $this->module->getService('price');
         
+        $modificationModel = $this->module->getService('modification');
+        
+        $searchModificationModel = new ModificationSearch();
+        $typeParams['ModificationSearch']['product_id'] = $id;
+        $modificationDataProvider = $searchModificationModel->search($typeParams);
+        $modificationModel = $this->module->getService('modification');
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $module = $this->module;
             $productEvent = new ProductEvent(['model' => $model]);
@@ -107,8 +115,12 @@ class ProductController extends Controller
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'searchModel' => $searchModel,
+                'module' => $this->module,
+                'modificationModel' => $modificationModel,
+                'searchModificationModel' => $searchModificationModel,
+                'modificationDataProvider' => $modificationDataProvider,
                 'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
                 'priceModel' => $priceModel,
             ]);
         }
@@ -148,7 +160,7 @@ class ProductController extends Controller
         
         die(json_encode($json));
     }
-
+    
     protected function findModel($id)
     {
         $model = $this->module->getService('product');
