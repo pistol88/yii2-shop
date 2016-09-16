@@ -46,6 +46,10 @@ class IncomingController extends Controller
                 if($product = $productModel::findOne($id)) {
                     $product->plusAmount($count);
                 }
+                
+                if($price = $post['price'][$id]) {
+                    $product->setPrice($price);
+                }
             }
             
             if($model->save()) {

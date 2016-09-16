@@ -11,11 +11,11 @@ class WidgetAsset extends AssetBundle
     ];
 
     public $js = [
-        'js/widgets.js',
+        'js/modification-construct.js',
     ];
     
     public $css = [
-        'css/widgets.css',
+        'css/modification-construct.css',
     ];
 
     public function init()

@@ -20,10 +20,30 @@ class ShowPrice extends \yii\base\Widget
 
     public function run()
     {
+        if($modifications = $this->model->modifications) {
+            $json = [];
+            
+            foreach($modifications as $modification) {
+                $json[$modification->id] = [
+                    'product_id' => $modification->product_id,
+                    'name' => $modification->name,
+                    'code' => $modification->code,
+                    'price' => $modification->price,
+                    'amount' => $modification->amount,
+                    'filter_value' => $modification->filtervariants,
+                ];
+            }
+            
+            $js = 'pistol88.modificationconstruct.modifications = '.json_encode($json).';';
+            
+            $this->getView()->registerJs($js);
+        }
+        
+        
         return Html::tag(
                 $this->htmlTag,
                 $this->model->getPrice(),
-                ['class' => "pistol88-shop-price {$this->cssClass}"]
+                ['class' => "pistol88-shop-price pistol88-shop-price-{$this->model->id} {$this->cssClass}"]
             );
     }
 }
