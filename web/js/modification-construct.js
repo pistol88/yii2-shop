@@ -8,11 +8,7 @@ Array.prototype.diff = function(a) {
 pistol88.modificationconstruct = {
     modifications: null,
     init: function() {
-<<<<<<< HEAD
         $(document).on('change', '.product-add-modification-form .filters select', this.generateName);
-=======
-        $(document).on('change', '.product-modification-update .filters select', this.generateName);
->>>>>>> dde34cb56543c6bbaf1c11173ea4709f79f24b6e
         
         $(document).on("beforeChangeCartElementOptions", function(e, options) {
             pistol88.modificationconstruct.setModification(options);
@@ -43,11 +39,7 @@ pistol88.modificationconstruct = {
     },
     generateName: function() {
         var name = '';
-<<<<<<< HEAD
         $('.product-add-modification-form .filters select').each(function(i, el) {
-=======
-        $('.product-modification-update .filters select').each(function(i, el) {
->>>>>>> dde34cb56543c6bbaf1c11173ea4709f79f24b6e
             var val = $(this).find('option:selected').text();
             if(val) {
                 name = name+' '+val;
