@@ -5,7 +5,9 @@ use Yii;
 use yii\helpers\Url;
 use pistol88\shop\models\Category;
 use pistol88\shop\models\Price;
+use pistol88\shop\models\StockToProduct;
 use pistol88\shop\models\product\ProductQuery;
+use pistol88\shop\models\StockToUser;
 use yii\db\ActiveQuery;
 
 class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interfaces\Torelate, \pistol88\cart\interfaces\CartElement
@@ -60,7 +62,7 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
     {
         return [
             [['name'], 'required'],
-            [['category_id', 'producer_id', 'sort', 'amount'], 'integer'],
+            [['category_id', 'producer_id', 'sort'], 'integer'],
             [['text', 'available', 'code'], 'string'],
             [['category_ids'], 'each', 'rule' => ['integer']],
             [['name'], 'string', 'max' => 200],
@@ -76,13 +78,14 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
             'category_id' => 'Главная категория',
             'producer_id' => 'Бренд',
             'name' => 'Название',
+            'amount' => 'Остаток',
             'text' => 'Текст',
             'short_text' => 'Короткий текст',
             'images' => 'Картинки',
             'available' => 'В наличии',
             'sort' => 'Сортировка',
             'slug' => 'СЕО-имя',
-            'amount' => 'Количество',
+            'amount_in_stock' => 'Количество на складах',
         ];
     }
     
@@ -91,18 +94,32 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return $this->id;
     }
     
-    public function minusAmount($count)
+    public function minusAmount($count, $moderator="false")
     {
-        $this->amount = $this->amount-$count;
-        
-        return $this->save(false);
+        if($moderator) {
+            $user = yii::$app->user->getIdentity();
+            if($stock = StockToUser::find()->where(['user_id' => $user->id])->one()->stock_id){
+               $product = $this->minusAmountInStock($stock, $count);
+            } else {
+                $stock = Stock::find()->orderBy('id ASC')->one()->id;
+                $product = $this->minusAmountInStock($stock, $count);
+            }
+        }
+        return $product;
     }
     
-    public function plusAmount($count)
+    public function plusAmount($count, $moderator="false")
     {
-        $this->amount = $this->amount+$count;
-        
-        return $this->save(false);
+        if($moderator) {
+            $user = yii::$app->user->getIdentity();
+            if($stock = StockToUser::find()->where(['user_id' => $user->id])->one()->stock_id){
+               $product = $this->plusAmountInStock($stock, $count);
+            } else {
+                $stock = Stock::find()->orderBy('id ASC')->one()->id;
+                $product = $this->plusAmountInStock($stock, $count);
+            }
+        }
+        return $product->save(false);
     }
     
     public function getProduct()
@@ -110,24 +127,35 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return $this;
     }
     
-    public function getCartId()
-    {
+    public function getCartId() {
         return $this->id;
     }
     
-    public function getCartName()
-    {
+    public function getCartName() {
         return $this->name;
     }
     
-    public function getCartPrice()
-    {
+    public function getCartPrice() {
         return $this->price;
     }
 
     public function getCartOptions()
     {
-        return '';
+        $options = [];
+        
+        if($filters = $this->getFilters()) {
+            foreach($filters as $filter) {
+                if($variants = $filter->variants) {
+                    $options[$filter->id]['name'] = $filter->name;
+                    foreach($variants as $variant) {
+                        $options[$filter->id]['variants'][$variant->id] = $variant->value;
+                    }
+                }
+            }
+        }
+        
+        return $options;
+        //return ['Цвет' => ['Красный', 'Белый', 'Синий'], 'Размер' => ['XXL']];
     }
     
     public function getName()
@@ -167,7 +195,17 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         
         return null;
     }
-    
+
+    public function getAmount()
+    {   
+        if($amount = StockToProduct::find()->where(['product_id' => $this->id])->sum('amount')){
+            return StockToProduct::find()->where(['product_id' => $this->id])->sum('amount');
+        } else {
+            return 0;
+        }
+        
+    }
+
     public function getLink()
     {
         return Url::toRoute([yii::$app->getModule('shop')->productUrlPrefix.'/'.$this->slug]);
@@ -197,10 +235,36 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         
         return false;
     }
-    
+    public function plusAmountInStock($stock, $count){
+        if($profuctInStock = StockToProduct::find()->where(['product_id' => $this->id, 'stock_id' => $stock])->one()){
+            $profuctInStock->amount = $profuctInStock->amount+$count;
+            
+        } else {
+            $profuctInStock = new StockToProduct();
+            $profuctInStock->amount = $count;
+            $profuctInStock->stock_id = $stock;
+            $profuctInStock->product_id = $this->id;
+            
+        }
+        return $profuctInStock;
+    }
 
-    public function afterSave($insert, $changedAttributes)
-    {
+    public function minusAmountInStock($stock, $count){
+        if($profuctInStock = StockToProduct::find()->where(['product_id' => $this->id, 'stock_id' => $stock])->one()){
+            if($profuctInStock->amount >= $count){
+                $profuctInStock->amount = $profuctInStock->amount - $count;
+
+            } else {
+               return 'На складе всего '.$profuctInStock->amount.' единиц товара. Пытались снять '.$count; 
+            }
+        } else {
+            return 'На складе нету такого товара. Пытались снять '.$count;
+            
+        }
+        return $profuctInStock->save();
+    }
+
+    public function afterSave($insert, $changedAttributes) {
         parent::afterSave($insert, $changedAttributes);
 
         if(!empty($this->category_id) && !empty($this->id)) {

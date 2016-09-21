@@ -8,8 +8,16 @@ use yii\bootstrap\Nav;
             'url' => ['/shop/product/index'],
         ],
         [
+            'label' => 'Склады',
+            'url' => ['/shop/stock/index'],
+        ],
+        [
             'label' => 'Поступление',
             'url' => ['/shop/incoming/create'],
+        ],
+        [
+            'label' => 'Отправление',
+            'url' => ['/shop/outcoming/create'],
         ],
         [
             'label' => 'Категории',

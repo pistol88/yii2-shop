@@ -67,6 +67,21 @@ class m160521_112617_Mass extends Migration {
                 'available' => "enum('yes','no')" . " DEFAULT 'yes'",
                 ], $tableOptions);
 
+            $this->createTable('{{%shop_product_modification}}', [
+                'id' => Schema::TYPE_PK . "",
+                'amount' => Schema::TYPE_INTEGER . "(11)",
+                'product_id' => Schema::TYPE_INTEGER . "(11) NOT NULL",
+                'name' => Schema::TYPE_STRING . "(200) NOT NULL",
+                'code' => Schema::TYPE_STRING . "(155)",
+                'images' => Schema::TYPE_TEXT . "",
+                'available' => "enum('yes','no')" . " DEFAULT 'yes'",
+                'sort' => Schema::TYPE_INTEGER . "(11)",
+                'slug' => Schema::TYPE_STRING . "(255)",
+                'create_time' => Schema::TYPE_DATETIME,
+                'update_time' => Schema::TYPE_DATETIME,
+                'filter_values' => Schema::TYPE_TEXT,
+                ], $tableOptions);
+            
             $this->createIndex('product_id', '{{%shop_price}}', 'product_id', 0);
             $this->createTable('{{%shop_producer}}', [
                 'id' => Schema::TYPE_PK . "",
@@ -88,6 +103,20 @@ class m160521_112617_Mass extends Migration {
                 'content' => Schema::TYPE_TEXT . "",
             ], $tableOptions);
             
+            $this->createTable( '{{%shop_stock}}',[
+                'id' => Schema::TYPE_PK . "",
+                'name' => Schema::TYPE_STRING . "(255) NOT NULL",
+                'address' => Schema::TYPE_STRING . "(255) NOT NULL",
+                'text' => Schema::TYPE_TEXT . "",
+            ], $tableOptions);
+
+            $this->createTable('{{%shop_stock_to_product}}', [
+                'id' => Schema::TYPE_PK . "",
+                'product_id' => Schema::TYPE_INTEGER . "(11) NOT NULL",
+                'stock_id' => Schema::TYPE_INTEGER . "(11) NOT NULL",
+                'amount' => Schema::TYPE_INTEGER . "(11) NOT NULL",
+                ], $tableOptions);
+
             $this->addForeignKey(
                 'fk_category', '{{%shop_product}}', 'category_id', '{{%shop_category}}', 'id', 'CASCADE', 'CASCADE'
             );
@@ -110,6 +139,10 @@ class m160521_112617_Mass extends Migration {
             
             $this->addForeignKey(
                 'fk_product', '{{%shop_product_to_category}}', 'product_id', '{{%shop_product}}', 'id', 'CASCADE', 'CASCADE'
+            );
+            
+            $this->addForeignKey(
+                'fk_product', '{{%shop_product_modification}}', 'product_id', '{{%shop_product}}', 'id', 'CASCADE', 'CASCADE'
             );
             
         } catch (Exception $e) {

@@ -1,19 +1,19 @@
 <?php
-namespace pistol88\shop\models\product;
+namespace pistol88\shop\models\stock;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use pistol88\shop\models\Product;
+use pistol88\shop\models\Stock;
 
 
-class ProductSearch extends Product
+class StockSearch extends Stock
 {
     public function rules()
     {
         return [
-            [['id', 'category_id', 'producer_id', 'price'], 'integer'],
-            [['name', 'text', 'short_text', 'available', 'code'], 'safe'],
+            [['id'], 'integer'],
+            [['name', 'text', 'address'], 'safe'],
         ];
     }
 
@@ -24,7 +24,7 @@ class ProductSearch extends Product
 
     public function search($params)
     {
-        $query = Product::find()->with('prices');
+        $query = Stock::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -32,7 +32,6 @@ class ProductSearch extends Product
                 'attributes' => [
                     'name',
                     'id',
-                    'available',
                 ],
             ])
         ]);
@@ -45,16 +44,11 @@ class ProductSearch extends Product
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'category_id' => $this->category_id,
-            'available' => $this->available,
-            'producer_id' => $this->producer_id,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'text', $this->text])
-            ->andFilterWhere(['like', 'code', $this->code])
-            ->andFilterWhere(['like', 'short_text', $this->short_text])
-            ->andFilterWhere(['like', 'category_id', $this->category_id]);
+            ->andFilterWhere(['like', 'address', $this->address]);
 
         return $dataProvider;
     }

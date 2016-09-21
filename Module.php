@@ -23,8 +23,11 @@ class Module extends \yii\base\Module
                 'product' => '\pistol88\shop\models\Product',
                 'category' => '\pistol88\shop\models\Category',
                 'incoming' => '\pistol88\shop\models\Incoming',
+                'outcoming' => '\pistol88\shop\models\Outcoming',
                 'producer' => '\pistol88\shop\models\Producer',
-                'price' => '\pistol88\shop\models\Price'
+                'price' => '\pistol88\shop\models\Price',
+                'stock' => '\pistol88\shop\models\Stock',
+                'modification' => '\pistol88\shop\models\Modification',
             ];
         }
         

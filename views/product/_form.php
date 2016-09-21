@@ -16,13 +16,6 @@ use pistol88\seo\widgets\SeoForm;
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
     
-    <div class="form-group shop-control">
-        <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Обновить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-        <?php if(!$model->isNewRecord) { ?>
-            <a class="btn btn-default" href="<?=Url::toRoute(['product/delete', 'id' => $model->id]);?>" title="Удалить" aria-label="Удалить" data-confirm="Вы уверены, что хотите удалить этот элемент?" data-method="post" data-pjax="0"><span class="glyphicon glyphicon-trash"></span></a>
-        <?php } ?>
-    </div>
-    
     <div class="row">
         <div class="col-lg-6 col-xs-6">
             <?= $form->field($model, 'name')->textInput() ?>
@@ -34,7 +27,7 @@ use pistol88\seo\widgets\SeoForm;
 	
     <div class="row">
         <div class="col-lg-6 col-xs-6">
-            <?= $form->field($model, 'amount')->textInput() ?>
+            <?= $form->field($model, 'amount')->textInput(['readonly' => true]) ?>
         </div>
         <div class="col-lg-6 col-xs-6">
             <?= $form->field($model, 'code')->textInput() ?>

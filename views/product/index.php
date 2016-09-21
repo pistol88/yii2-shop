@@ -42,12 +42,12 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     
-    <?php if($amount = $dataProvider->query->sum('amount')) { ?>
+    <?php /* if($amount = $dataProvider->query->sum('amount')) { ?>
         <div class="summary">
             Всего остатков:
             <?=$amount;?>
         </div>
-    <?php } ?>
+    <?php } */ ?>
     
     <br style="clear: both;"></div>
     <?php
@@ -73,7 +73,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Цена',
                 'value' => 'price'
             ],
-            'amount',
             /*
             [
                 'attribute' => 'available',

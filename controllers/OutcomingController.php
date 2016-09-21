@@ -8,7 +8,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
-class IncomingController extends Controller
+class OutcomingController extends Controller
 {
     public function behaviors()
     {
@@ -34,26 +34,30 @@ class IncomingController extends Controller
 
     public function actionCreate()
     {
-        $model = $this->module->getService('incoming');
+        $model = $this->module->getService('outcoming');
 
         if ($post = Yii::$app->request->post()) {
             $model->date = time();
             $model->content = serialize($post);
             
             $productModel = $this->module->getService('product');
-            
+            $flas = '';
             foreach($post['element'] as $id => $count) {
                 if($product = $productModel::findOne($id)) {
-                    $product->plusAmount($count);
-                }
-                
-                if($price = $post['price'][$id]) {
-                    $product->setPrice($price);
+                    $answer = $product->minusAmount($count, true);
+                    if($answer != 1){
+                        $flash .= $product->name.' '.$answer.'<br/>';
+                        \Yii::$app->session->setFlash('success', $answer);
+                    }
                 }
             }
             
-            if($model->save()) {
-                \Yii::$app->session->setFlash('success', 'Поступление успешно добавлено.');
+            if($flash != '') {
+                \Yii::$app->session->setFlash('success', $flash);
+            } else if ($model->save()) {
+                \Yii::$app->session->setFlash('success', 'Отправление успешно добавлено.');
+            }else {
+                \Yii::$app->session->setFlash('success', 'Что-то пошло не так.Попробуйте еще раз.');
             }
 
             return $this->redirect(['create', 'id' => $model->id]);
