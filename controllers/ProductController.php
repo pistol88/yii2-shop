@@ -5,7 +5,6 @@ use Yii;
 use pistol88\shop\models\product\ProductSearch;
 use pistol88\shop\models\stock\StockSearch;
 use pistol88\shop\models\price\PriceSearch;
-use pistol88\shop\models\modification\ModificationSearch;
 use pistol88\shop\models\PriceType;
 use pistol88\shop\events\ProductEvent;
 use pistol88\shop\models\modification\ModificationSearch;

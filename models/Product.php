@@ -218,27 +218,6 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return $return;
     }
 
-    public function getPrice($type = 'lower')
-    {
-        $price = $this->hasOne(Price::className(), ['product_id' => 'id']);
-        
-        if($type == 'lower') {
-            $price = $price->orderBy('price ASC')->one();
-        } elseif($type) {
-            $price = $price->where(['type_id' => $type])->one();
-        } elseif($defaultType = yii::$app->getModule('shop')->getPriceTypeId($this)) {
-            $price = $price->where(['type_id' => $defaultType])->one();
-        } else {
-            $price = $price->orderBy('price DESC')->one();
-        }
-        
-        if($price) {
-            return $price->price;
-        }
-        
-        return null;
-    }
-
     public function getAmount()
     {   
         if($amount = StockToProduct::find()->where(['product_id' => $this->id])->sum('amount')){
