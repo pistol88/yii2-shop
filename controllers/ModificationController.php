@@ -1,11 +1,13 @@
 <?php
 namespace pistol88\shop\controllers;
+
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+
 class ModificationController extends Controller
 {
     public function behaviors()
@@ -29,7 +31,7 @@ class ModificationController extends Controller
             ],
         ];
     }
-    
+
     public function actionAddPopup($productId)
     {
         $this->layout = 'mini';
@@ -40,6 +42,7 @@ class ModificationController extends Controller
             yii::$app->session->setFlash('modification-success-added', 'Модификация успешно добавлена', false);            
             return '<script>parent.document.location = "'.Url::to(['/shop/product/update', 'id' => $model->product_id]).'";</script>';
         }
+
         $model->product_id = (int)$productId;
         $model->available = 'yes';
         
@@ -49,6 +52,7 @@ class ModificationController extends Controller
         if (!$productModel) {
             throw new NotFoundHttpException('The requested product does not exist.');
         }
+
         return $this->render('create', [
             'model' => $model,
             'module' => $module,
@@ -59,15 +63,18 @@ class ModificationController extends Controller
     public function actionCreate()
     {
         $model = $this->module->getService('modification');
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $this->redirect(Yii::$app->request->referrer);
         }
         
         $this->redirect(Yii::$app->request->referrer);
     }
+
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['update', 'id' => $model->id]);
         } else {
@@ -84,8 +91,10 @@ class ModificationController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+
         $this->redirect(Yii::$app->request->referrer);
     }
+
     public function actionEditField()
     {
         $name = Yii::$app->request->post('name');
@@ -94,6 +103,7 @@ class ModificationController extends Controller
         $model = $this->module->getService('modification');
         $model::editField($pk, $name, $value);
     }
+
     protected function findModel($id)
     {
         $model = $this->module->getService('modification');

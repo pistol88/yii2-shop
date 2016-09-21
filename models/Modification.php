@@ -1,5 +1,6 @@
 <?php
 namespace pistol88\shop\models;
+
 use Yii;
 use yii\helpers\Url;
 use pistol88\shop\models\Category;
@@ -8,6 +9,7 @@ use pistol88\shop\models\product\ProductQuery;
 use yii\db\ActiveQuery;
 use yii\db\Expression;
 use yii\behaviors\TimestampBehavior;
+
 class Modification extends \yii\db\ActiveRecord implements \pistol88\cart\interfaces\CartElement
 {
     function behaviors()
@@ -53,7 +55,7 @@ class Modification extends \yii\db\ActiveRecord implements \pistol88\cart\interf
             [['slug'], 'string', 'max' => 88]
         ];
     }
-    
+
     public function attributeLabels()
     {
         return [
@@ -124,7 +126,7 @@ class Modification extends \yii\db\ActiveRecord implements \pistol88\cart\interf
     {
         return $this->price;
     }
-    
+
     public function getCartOptions()
     {
         return '';
@@ -143,6 +145,7 @@ class Modification extends \yii\db\ActiveRecord implements \pistol88\cart\interf
     public function getPrices()
     {
         $return = $this->hasMany(Price::className(), ['product_id' => 'id'])->orderBy('price ASC');
+
         return $return;
     }
     
@@ -178,6 +181,7 @@ class Modification extends \yii\db\ActiveRecord implements \pistol88\cart\interf
         } else {
             $this->filter_values = serialize([]);
         }
+
         return parent::beforeValidate();
     }
     

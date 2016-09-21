@@ -5,6 +5,7 @@ use Yii;
 use pistol88\shop\models\product\ProductSearch;
 use pistol88\shop\models\stock\StockSearch;
 use pistol88\shop\models\price\PriceSearch;
+use pistol88\shop\models\modification\ModificationSearch;
 use pistol88\shop\models\PriceType;
 use pistol88\shop\events\ProductEvent;
 use pistol88\shop\models\modification\ModificationSearch;
@@ -122,8 +123,12 @@ class ProductController extends Controller
                 'searchModificationModel' => $searchModificationModel,
                 'modificationDataProvider' => $modificationDataProvider,
                 'model' => $model,
-                'searchModel' => $searchModel,
+                'module' => $this->module,
+                'modificationModel' => $modificationModel,
+                'searchModificationModel' => $searchModificationModel,
+                'modificationDataProvider' => $modificationDataProvider,
                 'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
                 'priceModel' => $priceModel,
                 'StockSearch' => $StockSearch,
                 'StockDataProvider' => $StockDataProvider,
@@ -165,7 +170,7 @@ class ProductController extends Controller
         
         die(json_encode($json));
     }
-
+    
     protected function findModel($id)
     {
         $model = $this->module->getService('product');
