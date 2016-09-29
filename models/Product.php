@@ -119,14 +119,23 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
                 $product = $this->plusAmountInStock($stock, $count);
             }
         }
+		
         return $product->save(false);
     }
     
-    public function setPrice($price)
+    public function setPrice($price, $type = 1)
     {
         if($priceModel = $this->getPriceModel()) {
             $priceModel->price = $price;
             return $priceModel->save(false);
+        } else {
+            $priceModel = new Price;
+            $priceModel->product_id = $this->id;
+            $priceModel->price = $price;
+            $priceModel->type_id = $type;
+            $priceModel->name = 'Основная цена';
+            
+            return $priceModel->save();
         }
         
         return false;
@@ -230,7 +239,7 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
 
     public function getLink()
     {
-        return Url::toRoute([yii::$app->getModule('shop')->productUrlPrefix.'/'.$this->slug]);
+        return Url::toRoute([yii::$app->getModule('shop')->productUrlPrefix, 'slug' => $this->slug]);
     }
 
     public function getCategory()

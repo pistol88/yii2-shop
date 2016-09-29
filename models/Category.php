@@ -41,9 +41,8 @@ class Category extends \yii\db\ActiveRecord
         return [
             [['parent_id', 'sort'], 'integer'],
             [['name'], 'required'],
-            [['text'], 'string'],
-            [['name'], 'string', 'max' => 55],
-            [['slug'], 'string', 'max' => 255]
+            [['text', 'code'], 'string'],
+            [['name', 'code', 'slug'], 'string', 'max' => 55],
         ];
     }
 

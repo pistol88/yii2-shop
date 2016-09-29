@@ -33,26 +33,12 @@ class m160521_112617_Mass extends Migration {
 
             $this->createIndex('category_id', '{{%shop_product}}', 'category_id', 0);
             $this->createIndex('producer_id', '{{%shop_product}}', 'producer_id', 0);
-            
-            $this->createTable('{{%shop_product_modification}}', [
-                'id' => Schema::TYPE_PK . "",
-                'amount' => Schema::TYPE_INTEGER . "(11)",
-                'product_id' => Schema::TYPE_INTEGER . "(11) NOT NULL",
-                'name' => Schema::TYPE_STRING . "(200) NOT NULL",
-                'code' => Schema::TYPE_STRING . "(155)",
-                'images' => Schema::TYPE_TEXT . "",
-                'available' => "enum('yes','no')" . " DEFAULT 'yes'",
-                'sort' => Schema::TYPE_INTEGER . "(11)",
-                'slug' => Schema::TYPE_STRING . "(255)",
-                'create_time' => Schema::TYPE_DATETIME,
-                'update_time' => Schema::TYPE_DATETIME,
-                'filter_values' => Schema::TYPE_TEXT,
-                ], $tableOptions);
 
             $this->createTable('{{%shop_category}}', [
                 'id' => Schema::TYPE_PK . "",
                 'parent_id' => Schema::TYPE_INTEGER . "(11)",
                 'name' => Schema::TYPE_STRING . "(55) NOT NULL",
+                'code' => Schema::TYPE_STRING . "(155)",
                 'slug' => Schema::TYPE_STRING . "(255)",
                 'text' => Schema::TYPE_TEXT . "",
                 'image' => Schema::TYPE_TEXT . "",
@@ -102,6 +88,7 @@ class m160521_112617_Mass extends Migration {
             $this->createIndex('product_id', '{{%shop_price}}', 'product_id', 0);
             $this->createTable('{{%shop_producer}}', [
                 'id' => Schema::TYPE_PK . "",
+				'code' => Schema::TYPE_STRING . "(155)",
                 'name' => Schema::TYPE_STRING . "(255) NOT NULL",
                 'image' => Schema::TYPE_TEXT . "",
                 'text' => Schema::TYPE_TEXT . "",

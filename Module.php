@@ -11,7 +11,8 @@ class Module extends \yii\base\Module
     public $priceType = null; //callable, возвращающая type_id цены
     public $categoryUrlPrefix = '/shop/category/view';
     public $productUrlPrefix = '/shop/product/view';
-    
+    public $oneC = null;
+	
     const EVENT_PRODUCT_CREATE = 'create_product';
     const EVENT_PRODUCT_DELETE = 'delete_product';
     const EVENT_PRODUCT_UPDATE = 'update_product';
