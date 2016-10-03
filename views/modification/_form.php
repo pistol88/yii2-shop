@@ -53,7 +53,7 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'price')->textInput(['value' => $productModel->price]) ?>
             </div>
             <div class="col-md-3 col-xs-3">
-                <?= $form->field($model, 'amount')->textInput(['value' => 0]) ?>
+                <?= $form->field($model, 'amount')->textInput() ?>
             </div>
             <div class="col-md-3 col-xs-3">
                 <?= $form->field($model, 'available')->radioList(['yes' => 'Да','no' => 'Нет']); ?>

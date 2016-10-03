@@ -8,7 +8,15 @@ use yii\db\ActiveQuery;
 
 class Stock extends \yii\db\ActiveRecord
 {
-    
+    function behaviors()
+    {
+        return [
+            'field' => [
+                'class' => 'pistol88\field\behaviors\AttachFields',
+            ],
+        ];
+    }
+	
     public static function tableName()
     {
         return '{{%shop_stock}}';
@@ -31,6 +39,7 @@ class Stock extends \yii\db\ActiveRecord
             'text' => 'Текст',
         ];
     }
+	
     public function getProductAmount($productId){
         if($amount = StockToProduct::find('amount')->where(['product_id' => $productId, 'stock_id' => $this->id])->one()->amount) {
             return $amount;
@@ -38,6 +47,7 @@ class Stock extends \yii\db\ActiveRecord
             return 0;
         }
     }
+	
     public static function editField($id, $value, $productId) 
     {
         $stock = Stock::findOne($id);
@@ -51,6 +61,5 @@ class Stock extends \yii\db\ActiveRecord
             $productAmount->stock_id = $id;
             $productAmount->save();
         }
-        
     }
 }
