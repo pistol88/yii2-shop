@@ -117,7 +117,7 @@ class m160521_112617_Mass extends Migration {
             $this->createTable('{{%shop_stock_to_product}}', [
                 'id' => Schema::TYPE_PK . "",
                 'product_id' => Schema::TYPE_INTEGER . "(11) NOT NULL",
-                'stock_id' => Schema::TYPE_INTEGER . "(11) NOT NULL",
+                'stock_id' => Schema::TYPE_INTEGER . "(11)",
                 'amount' => Schema::TYPE_INTEGER . "(11) NOT NULL",
                 ], $tableOptions);
 
