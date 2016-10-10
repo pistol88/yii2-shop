@@ -15,8 +15,8 @@ use yii\widgets\ActiveForm;
                     <?php if($variants = $filter->variants) { ?>
                         <div class="col-md-3 col-xs-6">
                             <p>
-                                <label for="filterValue<?=$filter-id;?>"><?=$filter->name;?></label>
-                                <select id="filterValue<?=$filter-id;?>" name="filterValue[<?=$filter->id;?>]">
+                                <label for="filterValue<?=$filter->id;?>"><?=$filter->name;?></label>
+                                <select id="filterValue<?=$filter->id;?>" name="filterValue[<?=$filter->id;?>]">
                                     <option value="">-</option>
                                     <?php foreach($variants as $variant) { ?>
                                         <option <?php if(in_array($variant->id, $model->filtervariants)) echo ' selected="selected"'; ?> value="<?=$variant->id;?>"><?=$variant->value;?></option>
