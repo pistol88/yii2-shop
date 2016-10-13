@@ -27,7 +27,7 @@ use pistol88\seo\widgets\SeoForm;
 	
     <div class="row">
         <div class="col-lg-6 col-xs-6">
-            <?= $form->field($model, 'amount')->textInput(['readonly' => true]) ?>
+            <?= $form->field($model, 'amount')->textInput() ?>
         </div>
         <div class="col-lg-6 col-xs-6">
             <?= $form->field($model, 'code')->textInput() ?>

@@ -15,6 +15,19 @@ use kartik\select2\Select2;
 
     <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
 
+    <?php
+    //на Select2 c мультивыбором
+    echo $form->field($model, 'user_ids')->label('Пользователи, которые имеют доступ')
+        ->widget(Select2::classname(), [
+            'data' => ArrayHelper::map($activeStaffers, 'id', 'username'),
+            'language' => 'ru',
+            'options' => ['multiple' => true, 'placeholder' => 'Выберите сотрудников ...'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]);
+    ?>
+    
     <?php echo $form->field($model, 'text')->widget(
         \yii\imperavi\Widget::className(),
         [

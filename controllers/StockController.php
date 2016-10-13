@@ -54,6 +54,7 @@ class StockController extends Controller
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
+                'activeStaffers' => $this->module->users,
                 'model' => $model,
             ]);
         }
@@ -73,6 +74,7 @@ class StockController extends Controller
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
+                'activeStaffers' => $this->module->users,
                 'model' => $model,
             ]);
         }

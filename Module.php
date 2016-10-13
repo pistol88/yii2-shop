@@ -12,6 +12,8 @@ class Module extends \yii\base\Module
     public $categoryUrlPrefix = '/shop/category/view';
     public $productUrlPrefix = '/shop/product/view';
     public $oneC = null;
+    public $userModel = null;
+    public $users = [];
 	
     const EVENT_PRODUCT_CREATE = 'create_product';
     const EVENT_PRODUCT_DELETE = 'delete_product';
@@ -30,6 +32,17 @@ class Module extends \yii\base\Module
                 'stock' => '\pistol88\shop\models\Stock',
                 'modification' => '\pistol88\shop\models\Modification',
             ];
+        }
+        
+        if(!$this->userModel) {
+            if($user = yii::$app->user->getIdentity()) {
+                $this->userModel = $user::className();
+            }
+        }
+        
+        if(is_callable($this->users)) {
+            $func = $this->users;
+            $this->users = $func();
         }
         
         parent::init();

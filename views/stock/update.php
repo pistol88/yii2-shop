@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = 'Обновить';
     
     <?= $this->render('_form', [
         'model' => $model,
+        'activeStaffers' => $activeStaffers,
     ]) ?>
 
     <?php if($fieldPanel = \pistol88\field\widgets\Choice::widget(['model' => $model])) { ?>

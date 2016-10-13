@@ -25,9 +25,8 @@ class StockToUser extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'address' => 'Адрес',
-            'name' => 'Название',
-            'text' => 'Текст',
+            'user_id' => 'Пользователь',
+            'stock_id' => 'Склад',
         ];
     }
 }

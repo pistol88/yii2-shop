@@ -14,8 +14,8 @@ class Outcoming extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['content'], 'string'],
-            [['date'], 'integer'],
+            [['stock_id', 'product_id'], 'required'],
+            [['date', 'stock_id', 'product_id', 'user_id', 'order_id', 'count'], 'integer'],
         ];
     }
 

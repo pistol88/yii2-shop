@@ -3,7 +3,7 @@
 use yii\db\Schema;
 use yii\db\Migration;
 
-class m160521_112617_Mass extends Migration {
+class m160521_112618_Mass extends Migration {
 
     public function safeUp() {
         $tableOptions = null;
@@ -106,6 +106,16 @@ class m160521_112617_Mass extends Migration {
                 'date' => Schema::TYPE_INTEGER . "(11) NOT NULL",
                 'content' => Schema::TYPE_TEXT . "",
             ], $tableOptions);
+
+            $this->createTable( '{{%shop_outcoming}}',[
+                'id' => Schema::TYPE_PK . "",
+                'date' => Schema::TYPE_INTEGER . "(11) NOT NULL",
+                'stock_id' => Schema::TYPE_INTEGER . "(11) NOT NULL",
+                'product_id' => Schema::TYPE_INTEGER . "(11) NOT NULL",
+                'user_id' => Schema::TYPE_INTEGER . "(11)",
+                'order_id' => Schema::TYPE_INTEGER . "(11)",
+                'count' => Schema::TYPE_INTEGER . "(11) NOT NULL",
+            ], $tableOptions);
             
             $this->createTable( '{{%shop_stock}}',[
                 'id' => Schema::TYPE_PK . "",
@@ -117,10 +127,16 @@ class m160521_112617_Mass extends Migration {
             $this->createTable('{{%shop_stock_to_product}}', [
                 'id' => Schema::TYPE_PK . "",
                 'product_id' => Schema::TYPE_INTEGER . "(11) NOT NULL",
-                'stock_id' => Schema::TYPE_INTEGER . "(11)",
+                'stock_id' => Schema::TYPE_INTEGER . "(11) NOT NULL",
                 'amount' => Schema::TYPE_INTEGER . "(11) NOT NULL",
                 ], $tableOptions);
 
+            $this->createTable('{{%shop_stock_to_user}}', [
+                'id' => Schema::TYPE_PK . "",
+                'user_id' => Schema::TYPE_INTEGER . "(11) NOT NULL",
+                'stock_id' => Schema::TYPE_INTEGER . "(11) NOT NULL",
+                ], $tableOptions);
+				
             $this->addForeignKey(
                 'fk_category', '{{%shop_product}}', 'category_id', '{{%shop_category}}', 'id', 'CASCADE', 'CASCADE'
             );
@@ -150,6 +166,10 @@ class m160521_112617_Mass extends Migration {
             );
             
             $this->addForeignKey(
+                'fk_stock', '{{%shop_stock_to_user}}', 'stock_id', '{{%shop_stock}}', 'id', 'CASCADE', 'CASCADE'
+            );
+			
+            $this->addForeignKey(
                 'fk_product', '{{%shop_product_modification}}', 'product_id', '{{%shop_product}}', 'id', 'CASCADE', 'CASCADE'
             );
             
@@ -167,6 +187,11 @@ class m160521_112617_Mass extends Migration {
             $this->dropTable('{{%shop_producer}}');
             $this->dropTable('{{%shop_product_to_category}}');
             $this->dropTable('{{%shop_incoming}}');
+            $this->dropTable('{{%shop_outcoming}}');
+            $this->dropTable('{{%shop_stock_to_user}}');
+            $this->dropTable('{{%shop_product_modification}}');
+            $this->dropTable('{{%shop_stock}}');
+            $this->dropTable('{{%shop_stock_to_product}}');
         } catch (Exception $e) {
             echo 'Catch Exception ' . $e->getMessage() . ' ';
         }
