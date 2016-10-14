@@ -75,7 +75,7 @@ class Stock extends \yii\db\ActiveRecord
     {
         $stock = Stock::findOne($id);
         
-        if($productAmount = $this->getProduct()->where(['product_id' => $productId, 'stock_id' => $id])->one()){
+        if($productAmount = $stock->getProducts()->where(['product_id' => $productId, 'stock_id' => $id])->one()){
             $productAmount->amount = $value;
             $productAmount->save();
         } else {
