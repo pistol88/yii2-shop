@@ -2,35 +2,6 @@
 use yii\bootstrap\Nav;
 ?>
 <?= Nav::widget([
-    'items' => [
-        [
-            'label' => 'Товары',
-            'url' => ['/shop/product/index'],
-        ],
-        [
-            'label' => 'Склады',
-            'url' => ['/shop/stock/index'],
-        ],
-        [
-            'label' => 'Поступление',
-            'url' => ['/shop/incoming/create'],
-        ],
-        [
-            'label' => 'Отправление',
-            'url' => ['/shop/outcoming/create'],
-        ],
-        [
-            'label' => 'Категории',
-            'url' => ['/shop/category/index'],
-        ],
-        [
-            'label' => 'Производители',
-            'url' => ['/shop/producer/index'],
-        ],
-        [
-            'label' => 'Типы цен',
-            'url' => ['/shop/price-type/index'],
-        ],
-    ],
+    'items' => yii::$app->getModule('shop')->menu,
     'options' => ['class' =>'nav-pills'],
 ]); ?>

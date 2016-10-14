@@ -14,6 +14,28 @@ class Module extends \yii\base\Module
     public $oneC = null;
     public $userModel = null;
     public $users = [];
+    public $menu = [
+        [
+            'label' => 'Товары',
+            'url' => ['/shop/product/index'],
+        ],
+        [
+            'label' => 'Категории',
+            'url' => ['/shop/category/index'],
+        ],
+        [
+            'label' => 'Производители',
+            'url' => ['/shop/producer/index'],
+        ],
+        [
+            'label' => 'Склады',
+            'url' => ['/shop/stock/index'],
+        ],
+        [
+            'label' => 'Типы цен',
+            'url' => ['/shop/price-type/index'],
+        ],
+    ];
 	
     const EVENT_PRODUCT_CREATE = 'create_product';
     const EVENT_PRODUCT_DELETE = 'delete_product';
