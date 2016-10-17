@@ -17,6 +17,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'name')->textInput(['value' => $model->name?$model->name:'Основная цена']) ?>
 
     <?= $form->field($model, 'price')->textInput() ?>
+    
+    <?= $form->field($model, 'price_old')->textInput() ?>
 
     <?= $form->field($model, 'code')->textInput() ?>
     

@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = 'Обновить';
                             'editableOptions' => [
                                 'mode' => 'inline',
                             ],
-                            'options' => ['style' => 'width: 75px;']
+                            //'options' => ['style' => 'width: 75px;']
                         ],
                         [
                             'class' => EditableColumn::className(),
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = 'Обновить';
                             'editableOptions' => [
                                 'mode' => 'inline',
                             ],
-                            'options' => ['style' => 'width: 49px;']
+                            //'options' => ['style' => 'width: 49px;']
                         ],
                         [
                             'class' => EditableColumn::className(),
@@ -78,7 +78,7 @@ $this->params['breadcrumbs'][] = 'Обновить';
                                 ['no' => 'Нет', 'yes' => 'Да'],
                                 ['class' => 'form-control', 'prompt' => 'Наличие']
                             ),*/
-                            'contentOptions' => ['style' => 'width: 27px;']
+                            //'contentOptions' => ['style' => 'width: 27px;']
                         ],
                         [
                             'class' => EditableColumn::className(),
@@ -88,7 +88,17 @@ $this->params['breadcrumbs'][] = 'Обновить';
                             'editableOptions' => [
                                 'mode' => 'inline',
                             ],
-                            'options' => ['style' => 'width: 40px;']
+                            //'options' => ['style' => 'width: 40px;']
+                        ],
+                        [
+                            'class' => EditableColumn::className(),
+                            'attribute' => 'price_old',
+                            'url' => ['/shop/modification/edit-field'],
+                            'type' => 'text',
+                            'editableOptions' => [
+                                'mode' => 'inline',
+                            ],
+                            //'options' => ['style' => 'width: 40px;']
                         ],
                         ['class' => 'yii\grid\ActionColumn', 'controller' => 'modification', 'template' => '{update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 30px;']],
                     ],
@@ -133,7 +143,7 @@ $this->params['breadcrumbs'][] = 'Обновить';
                             'editableOptions' => [
                                 'mode' => 'inline',
                             ],
-                            'options' => ['style' => 'width: 75px;']
+                            //'options' => ['style' => 'width: 75px;']
                         ],
                         [
                             'class' => EditableColumn::className(),
@@ -143,7 +153,7 @@ $this->params['breadcrumbs'][] = 'Обновить';
                             'editableOptions' => [
                                 'mode' => 'inline',
                             ],
-                            'options' => ['style' => 'width: 49px;']
+                            //'options' => ['style' => 'width: 49px;']
                         ],
                         [
                             'class' => EditableColumn::className(),
@@ -160,7 +170,7 @@ $this->params['breadcrumbs'][] = 'Обновить';
                                 ['no' => 'Нет', 'yes' => 'Да'],
                                 ['class' => 'form-control', 'prompt' => 'Наличие']
                             ),*/
-                            'contentOptions' => ['style' => 'width: 27px;']
+                            //'contentOptions' => ['style' => 'width: 27px;']
                         ],
                         [
                             'class' => EditableColumn::className(),
@@ -170,7 +180,17 @@ $this->params['breadcrumbs'][] = 'Обновить';
                             'editableOptions' => [
                                 'mode' => 'inline',
                             ],
-                            'options' => ['style' => 'width: 40px;']
+                            //'options' => ['style' => 'width: 40px;']
+                        ],
+                        [
+                            'class' => EditableColumn::className(),
+                            'attribute' => 'price_old',
+                            'url' => ['price/edit-field'],
+                            'type' => 'text',
+                            'editableOptions' => [
+                                'mode' => 'inline',
+                            ],
+                            //'options' => ['style' => 'width: 40px;']
                         ],
                         ['class' => 'yii\grid\ActionColumn', 'controller' => 'price', 'template' => '{delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 30px;']],
                     ],

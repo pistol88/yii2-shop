@@ -49,7 +49,7 @@ class Modification extends \yii\db\ActiveRecord implements \pistol88\cart\interf
         return [
             [['name', 'product_id'], 'required'],
             [['sort', 'amount', 'product_id'], 'integer'],
-            [['price'], 'number'],
+            [['price', 'price_old'], 'number'],
             [['name', 'available', 'code', 'create_time', 'update_time', 'filter_values'], 'string'],
             [['name'], 'string', 'max' => 55],
             [['slug'], 'string', 'max' => 88]
@@ -64,6 +64,7 @@ class Modification extends \yii\db\ActiveRecord implements \pistol88\cart\interf
             'name' => 'Название',
             'code' => 'Код (актикул)',
             'price' => 'Цена',
+            'price_old' => 'Старая цена',
             'images' => 'Картинки',
             'available' => 'В наличии',
             'sort' => 'Сортировка',

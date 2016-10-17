@@ -16,7 +16,7 @@ class Price extends \yii\db\ActiveRecord implements \pistol88\cart\interfaces\Ca
         return [
             [['name', 'product_id'], 'required'],
             [['name', 'available', 'code'], 'string', 'max' => 100],
-            [['price'], 'number'],
+            [['price', 'price_old'], 'number'],
             [['product_id', 'amount'], 'integer'],
         ];
     }
@@ -28,6 +28,7 @@ class Price extends \yii\db\ActiveRecord implements \pistol88\cart\interfaces\Ca
             'name' => 'Название',
             'product_id' => 'Продукт',
             'price' => 'Цена',
+            'price_old' => 'Старая цена',
             'code' => 'Артикул',
             'available' => 'Наличие',
             'amount' => 'Остаток',

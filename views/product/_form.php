@@ -35,14 +35,28 @@ use pistol88\seo\widgets\SeoForm;
     </div>
     
     <div class="row">
-        <div class="col-lg-6 col-xs-6">
+        <div class="col-lg-2 col-xs-2">
             <?php if($model->isNewRecord) $model->available = 'yes'; ?>
             <?= $form->field($model, 'available')->radioList(['yes' => 'Да','no' => 'Нет']); ?>
         </div>
-        <div class="col-lg-6 col-xs-6">
+        <div class="col-lg-2 col-xs-2">
+            <?php if($model->isNewRecord) $model->is_new = 'no'; ?>
+            <?= $form->field($model, 'is_new')->radioList(['yes' => 'Да','no' => 'Нет']); ?>
+        </div>
+        <div class="col-lg-2 col-xs-2">
+            <?php if($model->isNewRecord) $model->is_popular = 'no'; ?>
+            <?= $form->field($model, 'is_popular')->radioList(['yes' => 'Да','no' => 'Нет']); ?>
+        </div>
+        <div class="col-lg-2 col-xs-2">
+            <?php if($model->isNewRecord) $model->is_promo = 'no'; ?>
+            <?= $form->field($model, 'is_promo')->radioList(['yes' => 'Да','no' => 'Нет']); ?>
+        </div>
+        <div class="col-lg-2 col-xs-2">
             <?= $form->field($model, 'sort')->textInput() ?>
         </div>
     </div>
+    
+
 	
     <div class="row">
         <div class="col-lg-6 col-xs-6">

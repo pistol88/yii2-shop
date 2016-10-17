@@ -63,7 +63,7 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return [
             [['name'], 'required'],
             [['category_id', 'producer_id', 'sort'], 'integer'],
-            [['text', 'available', 'code'], 'string'],
+            [['text', 'available', 'code', 'is_new', 'is_promo', 'is_popular'], 'string'],
             [['category_ids'], 'each', 'rule' => ['integer']],
             [['name'], 'string', 'max' => 200],
             [['short_text', 'slug'], 'string', 'max' => 255]
@@ -83,6 +83,9 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
             'short_text' => 'Короткий текст',
             'images' => 'Картинки',
             'available' => 'В наличии',
+            'is_new' => 'Новинка',
+            'is_popular' => 'Популярное',
+            'is_promo' => 'Акция',
             'sort' => 'Сортировка',
             'slug' => 'СЕО-имя',
             'amount_in_stock' => 'Количество на складах',
@@ -169,6 +172,15 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
     {
         if($price = $this->getPriceModel($type)) {
             return $price->price;
+        }
+        
+        return null;
+    }
+    
+    public function getOldprice($type = 'lower')
+    {
+        if($price = $this->getPriceModel($type)) {
+            return $price->price_old;
         }
         
         return null;
