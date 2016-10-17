@@ -3,11 +3,7 @@ namespace pistol88\shop\models;
 
 use Yii;
 use yii\helpers\Url;
-use pistol88\shop\models\Category;
-use pistol88\shop\models\Price;
-use pistol88\shop\models\StockToProduct;
 use pistol88\shop\models\product\ProductQuery;
-use pistol88\shop\models\StockToUser;
 use yii\db\ActiveQuery;
 
 class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interfaces\Torelate, \pistol88\cart\interfaces\CartElement
@@ -126,9 +122,9 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return $product->save(false);
     }
     
-    public function setPrice($price, $type = 1)
+    public function setPrice($price, $type = null)
     {
-        if($priceModel = $this->getPriceModel()) {
+        if($priceModel = $this->getPriceModel($type)) {
             $priceModel->price = $price;
             return $priceModel->save(false);
         } else {
@@ -144,18 +140,28 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return false;
     }
     
-    public function getPriceModel($type = 'lower')
+    public function getPriceModel($type = null)
     {
-        $price = $this->hasOne(Price::className(), ['product_id' => 'id']);
-        
-        if($type == 'lower') {
-            $price = $price->orderBy('price ASC')->one();
+        $prices = $this->getPrices();
+
+        if(!$prices->count()) {
+            return null;
+        }
+
+        if(!$type) {
+            if($defaultType = yii::$app->getModule('shop')->getPriceTypeId($this)) {
+                $type = $defaultType;
+            } else {
+                $type = 'sort';
+            }
+        }
+
+        if($type == 'sort') {
+            $price = $prices->filterWhere('price > 0')->orderBy('sort DESC')->one();
         } elseif($type) {
-            $price = $price->where(['type_id' => $type])->one();
-        } elseif($defaultType = yii::$app->getModule('shop')->getPriceTypeId($this)) {
-            $price = $price->where(['type_id' => $defaultType])->one();
+            $price = $prices->filterWhere(['type_id' => $type])->one();
         } else {
-            $price = $price->orderBy('price DESC')->one();
+            $price = $prices->orderBy('price DESC')->one();
         }
         
         return $price;
@@ -163,12 +169,10 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
     
     public function getPrices()
     {
-        $return = $this->hasMany(Price::className(), ['product_id' => 'id'])->orderBy('price ASC');
-
-        return $return;
+        return $this->hasMany(Price::className(), ['product_id' => 'id']);
     }
 
-    public function getPrice($type = 'lower')
+    public function getPrice($type = null)
     {
         if($price = $this->getPriceModel($type)) {
             return $price->price;
@@ -177,7 +181,7 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return null;
     }
     
-    public function getOldprice($type = 'lower')
+    public function getOldprice($type = null)
     {
         if($price = $this->getPriceModel($type)) {
             return $price->price_old;
