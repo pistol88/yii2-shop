@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
-use pistol88\order\assets\Asset;
-Asset::register($this);
+use pistol88\shop\assets\BackendAsset;
+BackendAsset::register($this);
 ?>
 
 <?php $this->beginPage() ?>
