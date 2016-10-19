@@ -157,9 +157,9 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         }
 
         if($type == 'sort') {
-            $price = $prices->filterWhere('price > 0')->orderBy('sort DESC')->one();
+            $price = $prices->where('price > 0')->orderBy('sort DESC')->one();
         } elseif($type) {
-            $price = $prices->filterWhere(['type_id' => $type])->one();
+            $price = $prices->where(['type_id' => $type])->one();
         } else {
             $price = $prices->orderBy('price DESC')->one();
         }
