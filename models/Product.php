@@ -128,13 +128,16 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
             $priceModel->price = $price;
             return $priceModel->save(false);
         } else {
-            $priceModel = new Price;
-            $priceModel->product_id = $this->id;
-            $priceModel->price = $price;
-            $priceModel->type_id = $type;
-            $priceModel->name = 'Основная цена';
-            
-            return $priceModel->save();
+            if($typeModel = PriceType::findOne($type)) {
+                $priceModel = new Price;
+                $priceModel->product_id = $this->id;
+                $priceModel->price = $price;
+                $priceModel->type_id = $type;
+                $priceModel->name = $typeModel->name;
+                
+                return $priceModel->save();
+            }
+
         }
         
         return false;
