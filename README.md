@@ -69,11 +69,10 @@ Yii::setAlias('@storageUrl','/frontend/web/images');
         'filter' => [
             'class' => 'pistol88\filter\Module',
             'adminRoles' => ['administrator'],
-            'relationModel' => 'pistol88\shop\models\Product',
             'relationFieldName' => 'category_id',
             'relationFieldValues' =>
                 function() {
-                    return \pistol88\shop\models\buldTextTree();
+                    return \pistol88\shop\models\Category::buildTextTree();
                 },
         ],
         'field' => [
