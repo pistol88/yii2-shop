@@ -61,7 +61,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ['attribute' => 'id', 'filter' => false, 'options' => ['style' => 'width: 55px;']],
             'name',
             'code',
-            'amount',
+            [
+                'label' => 'Остаток',
+                'content' => function($model) {
+                    return "<p>{$model->amount} (".($model->amount*$model->price).")</p>";
+                }
+            ],
             [
                 'attribute' => 'images',
                 'format' => 'images',
