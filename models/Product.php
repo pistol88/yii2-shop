@@ -95,31 +95,18 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
     
     public function minusAmount($count, $moderator="false")
     {
-        if($moderator) {
-            $user = yii::$app->user->getIdentity();
-            if($stock = StockToUser::find()->where(['user_id' => $user->id])->one()->stock_id){
-               $product = $this->minusAmountInStock($stock, $count);
-            } else {
-                $stock = Stock::find()->orderBy('id ASC')->one()->id;
-                $product = $this->minusAmountInStock($stock, $count);
-            }
-        }
-        return $product;
+        $this->amount = $this->amount-$count;
+        $this->save(false);
+        
+        return $this;
     }
     
     public function plusAmount($count, $moderator="false")
     {
-        if($moderator) {
-            $user = yii::$app->user->getIdentity();
-            if($stock = StockToUser::find()->where(['user_id' => $user->id])->one()->stock_id){
-               $product = $this->plusAmountInStock($stock, $count);
-            } else {
-                $stock = Stock::find()->orderBy('id ASC')->one()->id;
-                $product = $this->plusAmountInStock($stock, $count);
-            }
-        }
-		
-        return $product->save(false);
+        $this->amount = $this->amount+$count;
+        $this->save(false);
+        
+        return $this;
     }
     
     public function setPrice($price, $type = null)
