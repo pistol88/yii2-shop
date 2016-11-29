@@ -160,15 +160,19 @@ class ToolsController extends Controller
                     }
                 }
  
-				if($image = $product->Картинка) {
-                    $image = $path . '/' . $image;
+                 if($product->Картинка) {
+                    if($shopProduct->hasImage()) {
+                        foreach($shopProduct->getImages() as $imageModel) {
+                            $imageModel->delete();
+                        }
+                    }
+                 }
+ 
+				foreach($product->Картинка as $image) {
+                    $image = $path . '/' . (string)$image;
 
                     if(file_exists($image)) {
-                        if(sizeof($image) < 2942177) {
-                            if($shopProduct->hasImage()) {
-                                $shopProduct->image->delete();
-                            }
-                            
+                        if(sizeof($image) < 1942177) {
                             echo "Attach image $image<br />";
                             
                             $shopProduct->attachImage($image);
