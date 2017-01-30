@@ -198,6 +198,7 @@ class ToolsController extends Controller
                 $category->parent_id = $parentId;
             } else {
                 $category->name = (string)$group->Наименование;
+	        $category->parent_id = $parentId;
             }
             
             $category->save();
