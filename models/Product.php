@@ -24,7 +24,7 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
                 'inAttribute' => 'related_ids',
             ],
             'toCategory' => [
-                'class' => 'voskobovich\manytomany\ManyToManyBehavior',
+                'class' => 'voskobovich\behaviors\ManyToManyBehavior',
                 'relations' => [
                     'category_ids' => 'categories',
                 ],
