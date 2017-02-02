@@ -15,6 +15,15 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     
     <div class="row">
+        <div class="col-md-1">
+            <?= Html::tag('button', 'Удалить', [
+                'class' => 'btn btn-success pistol88-mass-delete',
+                'disabled' => 'disabled',
+                'data' => [
+                    'model' => $dataProvider->query->modelClass,
+                ],
+            ]) ?>
+        </div>
         <div class="col-md-2">
             <?= Html::a('Создать производителя', ['create'], ['class' => 'btn btn-success']) ?>
         </div>
@@ -39,6 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
+            ['class' => '\kartik\grid\CheckboxColumn'],
             ['attribute' => 'id', 'filter' => false, 'options' => ['style' => 'width: 55px;']],
             
             'name',
