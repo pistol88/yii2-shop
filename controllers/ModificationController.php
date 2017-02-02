@@ -55,7 +55,7 @@ class ModificationController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'module' => $module,
+            'module' => $this->module,
             'productModel' => $productModel
         ]);
     }

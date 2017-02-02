@@ -180,4 +180,22 @@ class ProductController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionMassDeletion()
+    {
+        $postData = \Yii::$app->request->post();
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $model = $postData['model'];
+        $modelId = $postData['modelId'];
+        if(!empty($modelId)) {
+            $ranks = $model::findAll($modelId);
+            if(!empty($ranks)) {
+                foreach ($ranks as $rank) {
+                    $rank->delete();
+                }
+                return  true;
+            }
+        }
+        return  false;
+    }
 }
