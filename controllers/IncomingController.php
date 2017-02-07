@@ -5,8 +5,12 @@ namespace pistol88\shop\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use pistol88\shop\models\incoming\IncomingSearch;
+use pistol88\shop\models\Incoming;
+use pistol88\shop\models\Product;
 
 class IncomingController extends Controller
 {
@@ -32,28 +36,46 @@ class IncomingController extends Controller
         ];
     }
 
+    public function actionIndex()
+    {
+        $searchModel = new IncomingSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $dataProvider->query->orderBy('id DESC');
+        
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    
     public function actionCreate()
     {
-        $model = $this->module->getService('incoming');
+        $model = new Incoming;
 
         if ($post = Yii::$app->request->post()) {
-            $model->date = time();
-            $model->content = serialize($post);
             
-            $productModel = $this->module->getService('product');
+            $productModel = new Product;
             
             foreach($post['element'] as $id => $count) {
+                $model = new Incoming;
+                $model->date = time();
+                $model->content = Html::encode(yii::$app->request->post('content'));
+                $model->amount = $count;
+                
                 if($product = $productModel::findOne($id)) {
                     $product->plusAmount($count);
+                    $model->product_id = $id;
                 }
                 
                 if($price = $post['price'][$id]) {
                     $product->setPrice($price);
+                    $model->price = $price;
                 }
-            }
-            
-            if($model->save()) {
-                \Yii::$app->session->setFlash('success', 'Поступление успешно добавлено.');
+                
+                if($model->save()) {
+                    \Yii::$app->session->setFlash('success', 'Поступление успешно добавлено.');
+                }
             }
 
             return $this->redirect(['create', 'id' => $model->id]);

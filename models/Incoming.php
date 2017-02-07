@@ -15,16 +15,25 @@ class Incoming extends \yii\db\ActiveRecord
     {
         return [
             [['content'], 'string'],
-            [['date'], 'integer'],
+            [['price'], 'double'],
+            [['product_id', 'amount'], 'integer'],
         ];
     }
 
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
+    }
+    
     public function attributeLabels()
     {
         return [
             'id' => 'ID',
             'date' => 'Дата',
-            'content' => 'Содержание заказа',
+            'product_id' => 'Товар',
+            'amount' => 'Кол-во',
+            'price' => 'Цена',
+            'content' => 'Комментарий',
         ];
     }
 }
