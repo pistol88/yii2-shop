@@ -3,12 +3,15 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
+use pistol88\shop\models\PriceType;
 ?>
 
 <div class="producer-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'type_id')->dropdownList(ArrayHelper::map(PriceType::find()->all(), 'id', 'name') ?>
+    
     <?= $form->field($model, 'name')->textInput() ?>
 
     <?= $form->field($model, 'sort')->textInput() ?>

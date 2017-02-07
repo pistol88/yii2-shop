@@ -1,7 +1,9 @@
 <?php
 use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
+use pistol88\shop\models\PriceType;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\ProductOption */
@@ -12,6 +14,8 @@ use yii\widgets\ActiveForm;
     
     <?php $form = ActiveForm::begin(['action' => Url::toRoute(['price/create'])]); ?>
 
+    <?= $form->field($model, 'type_id')->dropdownList(ArrayHelper::map(PriceType::find()->all(), 'id', 'name')) ?>
+    
     <?= $form->field($model, 'product_id')->textInput(['type' => 'hidden', 'value' => $productModel->id])->label(false) ?>
     
     <?= $form->field($model, 'name')->textInput(['value' => $model->name?$model->name:'Основная цена']) ?>

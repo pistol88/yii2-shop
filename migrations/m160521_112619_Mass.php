@@ -21,7 +21,7 @@ class m160521_112619_Mass extends Migration {
                 'related_products' => Schema::TYPE_TEXT . " COMMENT 'PHP serialize'",
                 'name' => Schema::TYPE_STRING . "(200) NOT NULL",
                 'code' => Schema::TYPE_STRING . "(155)",
-                'price' => Schema::TYPE_DECIMAL . "(11, 2)",
+                //'price' => Schema::TYPE_DECIMAL . "(11, 2)",
                 'text' => Schema::TYPE_TEXT . " ",
                 'short_text' => Schema::TYPE_STRING . "(255)",
                 'is_new' => "enum('yes','no')" . " DEFAULT 'no'",
