@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use kartik\select2\Select2;
 use pistol88\shop\models\Product;
+use pistol88\shop\models\PriceType;
 
 $this->title = 'Новое поступление';
 $this->params['breadcrumbs'][] = $this->title;
@@ -12,8 +13,16 @@ $this->params['breadcrumbs'][] = $this->title;
 \pistol88\shop\assets\CreateIncomingAsset::register($this);
 \pistol88\shop\assets\BackendAsset::register($this);
 
+$priceTypes = [];
+
+foreach(PriceType::find()->all() as $priceType) {
+    $priceTypes[] = ['id' => $priceType->id, 'name' => $priceType->name];
+}
+
 $this->registerJs(
     "
+    pistol88.createincoming.shopPriceTypesArray = ".json_encode($priceTypes)."
+    
     $('.incoming-delete').on('click', function() {
         
     });
@@ -29,15 +38,17 @@ $this->registerJs(
             
         </div>
         <div class="col-md-10">
-            <?=$this->render('../parts/menu');?>
+            <div class="shop-menu">
+                <?=$this->render('../parts/menu');?>
+            </div>
         </div>
     </div>
     
-    <?php if(Yii::$app->session->hasFlash('success')): ?>
+    <?php if(Yii::$app->session->hasFlash('success')) { ?>
         <div class="alert alert-success" role="alert">
             <?= Yii::$app->session->getFlash('success') ?>
         </div>
-    <?php endif; ?>
+    <?php } ?>
     
 
     
@@ -57,7 +68,7 @@ $this->registerJs(
                         ]); ?>
                     </div>
                 </div>
-                <div class="col-lg-6"><input class="new-input" data-info-service="<?=Url::toRoute(['/microshop/product/product-info']);?>" type="text" value="" placeholder="Код или артикул + Enter" style="width: 300px;" /></div>
+                <div class="col-lg-6"><input class="new-input" data-info-service="<?=Url::toRoute(['/shop/product/product-info']);?>" type="text" value="" placeholder="Код или артикул + Enter" style="width: 300px;" /></div>
             </div>
         </div>
         <div id="incoming-list" style="width: 800px; padding: 20px;">

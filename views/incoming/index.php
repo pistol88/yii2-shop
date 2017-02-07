@@ -14,7 +14,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a('Создать поступление', ['create'], ['class' => 'btn btn-success']) ?>
         </div>
         <div class="col-md-10">
-            <?=$this->render('../parts/menu');?>
+            <div class="shop-menu">
+                <?=$this->render('../parts/menu');?>
+            </div>
         </div>
     </div>
 

@@ -52,8 +52,8 @@ class Stock extends \yii\db\ActiveRecord
     }
 	
     public function getProductAmount($productId){
-        if($amount = StockToProduct::find('amount')->where(['product_id' => $productId, 'stock_id' => $this->id])->one()->amount) {
-            return $amount;
+        if($amount = StockToProduct::find('amount')->where(['product_id' => $productId, 'stock_id' => $this->id])->one()) {
+            return $amount->amount;
         } else {
             return 0;
         }
