@@ -58,7 +58,7 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
     {
         return [
             [['name'], 'required'],
-            [['category_id', 'producer_id', 'sort'], 'integer'],
+            [['category_id', 'producer_id', 'sort', 'amount'], 'integer'],
             [['text', 'available', 'code', 'is_new', 'is_promo', 'is_popular'], 'string'],
             [['category_ids'], 'each', 'rule' => ['integer']],
             [['name'], 'string', 'max' => 200],
