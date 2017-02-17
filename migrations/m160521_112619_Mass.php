@@ -113,6 +113,7 @@ class m160521_112619_Mass extends Migration {
                 'product_id' => Schema::TYPE_INTEGER . "(11) NOT NULL",
                 'amount' => Schema::TYPE_INTEGER . "(11) NOT NULL",
                 'price' => Schema::TYPE_DECIMAL . "(11, 2)",
+	        'content' => Schema::TYPE_TEXT . "",
             ], $tableOptions);
 
             $this->createTable( '{{%shop_outcoming}}',[
