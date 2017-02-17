@@ -10,7 +10,7 @@ use pistol88\shop\models\PriceType;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'type_id')->dropdownList(ArrayHelper::map(PriceType::find()->all(), 'id', 'name') ?>
+    <?= $form->field($model, 'type_id')->dropdownList(ArrayHelper::map(PriceType::find()->all(), 'id', 'name')) ?>
     
     <?= $form->field($model, 'name')->textInput() ?>
 
