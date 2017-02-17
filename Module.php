@@ -37,6 +37,9 @@ class Module extends \yii\base\Module
         ],
     ];
 	
+    public $productColumnsFile = null;
+    public $productColumns = null;
+    
     const EVENT_PRODUCT_CREATE = 'create_product';
     const EVENT_PRODUCT_DELETE = 'delete_product';
     const EVENT_PRODUCT_UPDATE = 'update_product';
@@ -65,6 +68,14 @@ class Module extends \yii\base\Module
         if(is_callable($this->users)) {
             $func = $this->users;
             $this->users = $func();
+        }
+        
+        if(!$this->productColumnsFile) {
+            $this->productColumnsFile = __DIR__ . '/settings/productsGridViewColumns.php';
+        }
+        
+        if(!$this->productColumns) {
+            $this->productColumns = require $this->productColumnsFile;
         }
         
         parent::init();

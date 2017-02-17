@@ -43,6 +43,7 @@ class ProductController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'productColumns' => $this->module->productColumns,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
