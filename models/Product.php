@@ -281,8 +281,8 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
             $profuctInStock->amount = $count;
             $profuctInStock->stock_id = $stock;
             $profuctInStock->product_id = $this->id;
-            
         }
+        
         return $profuctInStock;
     }
 
@@ -296,8 +296,8 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
             }
         } else {
             return 'На складе нету такого товара. Пытались снять '.$count;
-            
         }
+        
         return $profuctInStock->save();
     }
 
