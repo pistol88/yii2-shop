@@ -59,10 +59,10 @@ class Stock extends \yii\db\ActiveRecord
         }
     }
 	
-	public function getProducts()
-	{
-		return $this->hasMany(StockToProduct::className(), ['stock_id' => 'id']);
-	}
+    public function getProducts()
+    {
+        return $this->hasMany(StockToProduct::className(), ['stock_id' => 'id']);
+    }
     
     public function getUsers()
     {
@@ -89,7 +89,7 @@ class Stock extends \yii\db\ActiveRecord
     
     public function getAmount($productId)
     {
-		$amount = $amount = $this->getProducts();
+        $amount = $amount = $this->getProducts();
 		
         if($amount && $amount = $amount->where(['product_id' => $productId])->one()) {
             return $amount->amount;
