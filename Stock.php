@@ -19,12 +19,11 @@ class Stock extends Component
         return StockModel::findOne($id);
     }
 	
-	public function outcoming($stockId, $productId, $count, $orderId = null)
-	{
+    public function outcoming($stockId, $productId, $count, $orderId = null)
+    {
         $return = false;
         
-		if($stock = $this->getStock($stockId)) {
-           
+        if($stock = $this->getStock($stockId)) {
             $outcoming = new Outcoming;
             $outcoming->user_id = yii::$app->user->id;
             $outcoming->date = time();
@@ -39,7 +38,7 @@ class Stock extends Component
         }
         
         return $return;
-	}
+    }
     
     public function getOutcomingsByOrder($orderId, $productId)
     {
