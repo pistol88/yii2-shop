@@ -84,8 +84,7 @@ class Module extends \yii\base\Module
     //возвращает type_id цены, которую стоит отобразить покупателю
     public function getPriceTypeId($product = null)
     {
-        if(is_callable($this->priceType))
-        {
+        if(is_callable($this->priceType)) {
             $priceType = $this->priceType;
             return $values($product);
         }
