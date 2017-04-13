@@ -272,7 +272,9 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         
         return false;
     }
-    public function plusAmountInStock($stock, $count){
+
+    public function plusAmountInStock($stock, $count)
+    {
         if($profuctInStock = StockToProduct::find()->where(['product_id' => $this->id, 'stock_id' => $stock])->one()){
             $profuctInStock->amount = $profuctInStock->amount+$count;
             
@@ -286,7 +288,8 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return $profuctInStock;
     }
 
-    public function minusAmountInStock($stock, $count){
+    public function minusAmountInStock($stock, $count)
+    {
         if($profuctInStock = StockToProduct::find()->where(['product_id' => $this->id, 'stock_id' => $stock])->one()){
             if($profuctInStock->amount >= $count){
                 $profuctInStock->amount = $profuctInStock->amount - $count;
@@ -301,7 +304,8 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return $profuctInStock->save();
     }
 
-    public function afterSave($insert, $changedAttributes) {
+    public function afterSave($insert, $changedAttributes)
+    {
         parent::afterSave($insert, $changedAttributes);
 
         if(!empty($this->category_id) && !empty($this->id)) {

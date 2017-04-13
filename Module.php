@@ -20,6 +20,10 @@ class Module extends \yii\base\Module
             'url' => ['/shop/product/index'],
         ],
         [
+            'label' => 'Приход',
+            'url' => ['/shop/incoming/create'],
+        ],
+        [
             'label' => 'Категории',
             'url' => ['/shop/category/index'],
         ],
@@ -86,7 +90,7 @@ class Module extends \yii\base\Module
     {
         if(is_callable($this->priceType)) {
             $priceType = $this->priceType;
-            return $values($product);
+            return $priceType($product);
         }
         
         return $this->defaultTypeId;
