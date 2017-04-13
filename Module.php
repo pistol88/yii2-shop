@@ -32,6 +32,10 @@ class Module extends \yii\base\Module
             'url' => ['/shop/stock/index'],
         ],
         [
+            'label' => 'Приход',
+            'url' => ['/shop/incoming/create'],
+        ],
+        [
             'label' => 'Типы цен',
             'url' => ['/shop/price-type/index'],
         ],

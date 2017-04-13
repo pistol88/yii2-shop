@@ -7,9 +7,9 @@ use pistol88\shop\models\Producer;
 $searchModel = new pistol88\shop\models\product\ProductSearch;
 
 return [
-    ['class' => '\kartik\grid\CheckboxColumn'],
-    ['class' => 'yii\grid\SerialColumn'],
-    ['attribute' => 'id', 'filter' => false, 'options' => ['style' => 'width: 55px;']],
+    //['class' => '\kartik\grid\CheckboxColumn'],
+    //['class' => 'yii\grid\SerialColumn'],
+    //['attribute' => 'id', 'filter' => false, 'options' => ['style' => 'width: 55px;']],
     'name',
     'code',
     [
