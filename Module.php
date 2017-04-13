@@ -20,10 +20,6 @@ class Module extends \yii\base\Module
             'url' => ['/shop/product/index'],
         ],
         [
-            'label' => 'Приход',
-            'url' => ['/shop/incoming/create'],
-        ],
-        [
             'label' => 'Категории',
             'url' => ['/shop/category/index'],
         ],
@@ -80,6 +76,11 @@ class Module extends \yii\base\Module
         
         if(!$this->productColumns) {
             $this->productColumns = require $this->productColumnsFile;
+        }
+
+        if(is_callable($this->productColumns)) {
+            $productColumns = $this->productColumns;
+            $this->productColumns = $productColumns();
         }
         
         parent::init();

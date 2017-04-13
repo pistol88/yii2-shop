@@ -119,9 +119,6 @@ class ProductController extends Controller
             return $this->redirect(['update', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                'modificationModel' => $modificationModel,
-                'searchModificationModel' => $searchModificationModel,
-                'modificationDataProvider' => $modificationDataProvider,
                 'model' => $model,
                 'module' => $this->module,
                 'modificationModel' => $modificationModel,
