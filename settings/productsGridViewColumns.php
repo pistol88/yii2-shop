@@ -5,6 +5,7 @@ use pistol88\shop\models\Category;
 use pistol88\shop\models\Producer;
 
 $searchModel = new pistol88\shop\models\product\ProductSearch;
+$searchModel->load(Yii::$app->request->queryParams);
 
 return [
     ['class' => '\kartik\grid\CheckboxColumn'],
