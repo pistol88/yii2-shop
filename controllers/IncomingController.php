@@ -70,8 +70,10 @@ class IncomingController extends Controller
                 
                 if($prices = $post['price'][$id]) {
                     foreach($prices as $typeTypeId => $price) {
-                        $product->setPrice($price, $typeTypeId);
-                        $model->price = $price;
+                        if($price) {
+                            $product->setPrice($price, $typeTypeId);
+                            $model->price = $price;
+                        }
                     }
                 }
                 
