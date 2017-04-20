@@ -64,7 +64,7 @@ Yii::setAlias('@storageUrl','/frontend/web/images');
         //..
         'shop' => [
             'class' => 'pistol88\shop\Module',
-            'adminRoles' => ['administrator'],
+            'adminRoles' => ['administrator', 'superadmin', 'admin'],
         ],
         'filter' => [
             'class' => 'pistol88\filter\Module',
