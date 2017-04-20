@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 $this->title = 'Поступления';
+$this->params['breadcrumbs'][] = ['label' => 'Магазин', 'url' => ['/shop/default/index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 \pistol88\shop\assets\BackendAsset::register($this);
@@ -14,9 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a('Создать поступление', ['create'], ['class' => 'btn btn-success']) ?>
         </div>
         <div class="col-md-10">
-            <div class="shop-menu">
-                <?=$this->render('../parts/menu');?>
-            </div>
+
         </div>
     </div>
 

@@ -33,7 +33,7 @@ class PriceController extends Controller
 
     public function actionCreate()
     {
-        $model = $this->module->getService('price');
+        $model = new Price;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //nothing
@@ -67,13 +67,13 @@ class PriceController extends Controller
         $name = Yii::$app->request->post('name');
         $value = Yii::$app->request->post('value');
         $pk = unserialize(base64_decode(Yii::$app->request->post('pk')));
-        $model = $this->module->getService('price');
+        $model = new Price;
         $model::editField($pk, $name, $value);
     }
 
     protected function findModel($id)
     {
-        $model = $this->module->getService('price');
+        $model = new Price;
         
         if (($model = $model::findOne($id)) !== null) {
             return $model;

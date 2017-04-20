@@ -12,6 +12,9 @@ class ProductQuery extends ActiveQuery
            'filter' => [
                'class' => 'pistol88\filter\behaviors\Filtered',
            ],
+           'field' => [
+               'class' => 'pistol88\field\behaviors\Filtered',
+           ],
        ];
     }
     

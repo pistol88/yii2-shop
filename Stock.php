@@ -4,7 +4,6 @@ namespace pistol88\shop;
 use pistol88\shop\models\Stock as StockModel;
 use pistol88\shop\models\Outcoming;
 use yii\base\Component;
-use yii\db\Query;
 use yii;
 
 class Stock extends Component

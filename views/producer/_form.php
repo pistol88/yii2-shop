@@ -15,7 +15,7 @@ use pistol88\seo\widgets\SeoForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'placeholder' => 'Не обязательно']) ?>
 
     <?php echo $form->field($model, 'text')->widget(
         \yii\imperavi\Widget::className(),

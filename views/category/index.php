@@ -6,24 +6,24 @@ use pistol88\shop\models\Category;
 use kartik\export\ExportMenu;
 
 $this->title = 'Категории';
+$this->params['breadcrumbs'][] = ['label' => 'Магазин', 'url' => ['/shop/default/index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 \pistol88\shop\assets\BackendAsset::register($this);
 ?>
 <div class="category-index">
-    <div class="shop-menu">
-        <?=$this->render('../parts/menu');?>
-    </div>
     
     <div class="row">
         <div class="col-md-1">
-            <?= Html::tag('button', 'Удалить', [
-                'class' => 'btn btn-success pistol88-mass-delete',
-                'disabled' => 'disabled',
-                'data' => [
-                    'model' => $dataProvider->query->modelClass,
-                ],
-            ]) ?>
+            <?php if(yii::$app->request->get('view') == 'list') { ?>
+                <?= Html::tag('button', 'Удалить', [
+                    'class' => 'btn btn-success pistol88-mass-delete',
+                    'disabled' => 'disabled',
+                    'data' => [
+                        'model' => $dataProvider->query->modelClass,
+                    ],
+                ]) ?>
+            <?php } ?>
         </div>
         <div class="col-md-2">
             <?= Html::a('Создать категорию', ['create'], ['class' => 'btn btn-success']) ?>
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
     
     <br style="clear: both;">
     <?php
-    if(isset($_GET['view']) && $_GET['view'] == 'list') {
+    if(yii::$app->request->get('view') == 'list') {
         $categories = \kartik\grid\GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ),
                     'value' => 'parent.name'
                 ],
-                ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 125px;']],
+                ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}']
             ],
         ]);
     } else {

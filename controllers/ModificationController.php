@@ -1,12 +1,14 @@
 <?php
 namespace pistol88\shop\controllers;
 
-use Yii;
+use pistol88\shop\models\Modification;
+use pistol88\shop\models\Product;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use Yii;
 
 class ModificationController extends Controller
 {
@@ -36,7 +38,7 @@ class ModificationController extends Controller
     {
         $this->layout = 'mini';
         
-        $model = $this->module->getService('modification');
+        $model = new Modification;
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             yii::$app->session->setFlash('modification-success-added', 'Модификация успешно добавлена', false);            
@@ -46,7 +48,7 @@ class ModificationController extends Controller
         $model->product_id = (int)$productId;
         $model->available = 'yes';
         
-        $productModel = $this->module->getService('product');
+        $productModel = new Product;
         $productModel = $productModel::findOne($productId);
         
         if (!$productModel) {
@@ -62,7 +64,7 @@ class ModificationController extends Controller
     
     public function actionCreate()
     {
-        $model = $this->module->getService('modification');
+        $model = new Modification;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $this->redirect(Yii::$app->request->referrer);
@@ -100,13 +102,13 @@ class ModificationController extends Controller
         $name = Yii::$app->request->post('name');
         $value = Yii::$app->request->post('value');
         $pk = unserialize(base64_decode(Yii::$app->request->post('pk')));
-        $model = $this->module->getService('modification');
+        $model = new Modification;
         $model::editField($pk, $name, $value);
     }
 
     protected function findModel($id)
     {
-        $model = $this->module->getService('modification');
+        $model = new Modification;
         
         if (($model = $model::findOne($id)) !== null) {
             return $model;

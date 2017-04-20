@@ -10,9 +10,6 @@ $this->params['breadcrumbs'][] = 'Обновить';
 \pistol88\shop\assets\BackendAsset::register($this);
 ?>
 <div class="product-update">
-    <div class="shop-menu">
-        <?=$this->render('../parts/menu');?>
-    </div>
 
     <ul class="nav nav-tabs">
         <li class="active"><a href="#product-product" data-toggle="tab">Карточка товара</a></li>
@@ -100,7 +97,7 @@ $this->params['breadcrumbs'][] = 'Обновить';
                             ],
                             //'options' => ['style' => 'width: 40px;']
                         ],
-                        ['class' => 'yii\grid\ActionColumn', 'controller' => 'modification', 'template' => '{update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 30px;']],
+                        ['class' => 'yii\grid\ActionColumn', 'controller' => 'modification', 'template' => '{update} {delete}'],
                     ],
                 ]); ?>
             <?php } else { ?>

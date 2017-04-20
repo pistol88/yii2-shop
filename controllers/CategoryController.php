@@ -3,6 +3,7 @@
 namespace pistol88\shop\controllers;
 
 use Yii;
+use pistol88\shop\models\Category;
 use pistol88\shop\models\category\CategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -18,15 +19,9 @@ class CategoryController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'delete', 'update', 'create'],
                         'allow' => true,
                         'roles' => $this->module->adminRoles,
                     ],
-                    [
-                        'actions' => ['view'],
-                        'allow' => true,
-                        'roles' => ['?', '@'],
-                    ]
                 ]
             ],
             'verbs' => [
@@ -50,18 +45,9 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function actionView($slug)
-    {
-        $model = $this->findModelBySlug($slug);
-
-        return $this->render('view', [
-            'model' => $model,
-        ]);
-    }
-
     public function actionCreate()
     {
-        $model = $this->module->getService('category');
+        $model = new Category;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['update', 'id' => $model->id]);
@@ -94,7 +80,7 @@ class CategoryController extends Controller
 
     protected function findModel($id)
     {
-        $model = $this->module->getService('category');
+        $model = new Category;
         
         if (($model = $model::findOne($id)) !== null) {
             return $model;
@@ -105,7 +91,7 @@ class CategoryController extends Controller
     
     protected function findModelBySlug($slug)
     {
-        $model = $this->module->getService('category');
+        $model = new Category;
         
         if (($model = $model::findOne(['slug' => $slug])) !== null) {
             return $model;

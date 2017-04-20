@@ -4,14 +4,12 @@ use yii\helpers\Url;
 use kartik\export\ExportMenu;
 
 $this->title = 'Типы цен';
+$this->params['breadcrumbs'][] = ['label' => 'Магазин', 'url' => ['/shop/default/index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 \pistol88\shop\assets\BackendAsset::register($this);
 ?>
 <div class="price-type-index">
-    <div class="shop-menu">
-        <?=$this->render('../parts/menu');?>
-    </div>
 
     <div class="row">
         <div class="col-md-1">
@@ -38,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'sort',
             
-            ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 125px;']],
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}']
         ],
     ]); ?>
 

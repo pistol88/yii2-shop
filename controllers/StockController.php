@@ -98,7 +98,7 @@ class StockController extends Controller
         $productId = Yii::$app->request->post('name');
         $value = Yii::$app->request->post('value');
         $pk = unserialize(base64_decode(Yii::$app->request->post('pk')));
-        $model = $this->module->getService('stock');
+        $model = new Stock;
         $model::editField($pk, $value, $productId);
     }
 

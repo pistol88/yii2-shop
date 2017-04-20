@@ -4,15 +4,12 @@ use yii\helpers\Html;
 use kartik\export\ExportMenu;
 
 $this->title = 'Производители';
+$this->params['breadcrumbs'][] = ['label' => 'Магазин', 'url' => ['/shop/default/index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 \pistol88\shop\assets\BackendAsset::register($this);
 ?>
 <div class="producer-index">
-    
-    <div class="shop-menu">
-        <?=$this->render('../parts/menu');?>
-    </div>
     
     <div class="row">
         <div class="col-md-1">
@@ -63,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				}
 			],
             
-            ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}',  'buttonOptions' => ['class' => 'btn btn-default'], 'options' => ['style' => 'width: 125px;']],
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}']
         ],
     ]); ?>
 

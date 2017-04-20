@@ -33,16 +33,6 @@ $this->registerJs(
 );
 ?>
 <div class="incoming-create">
-    <div class="row">
-        <div class="col-md-2">
-            
-        </div>
-        <div class="col-md-10">
-            <div class="shop-menu">
-                <?=$this->render('../parts/menu');?>
-            </div>
-        </div>
-    </div>
     
     <?php if(Yii::$app->session->hasFlash('success')) { ?>
         <div class="alert alert-success" role="alert">

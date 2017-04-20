@@ -11,5 +11,9 @@ class Bootstrap implements BootstrapInterface
         if(!$app->has('stock')) {
             $app->set('stock', ['class' => 'pistol88\shop\Stock']);
         }
+
+        if(!$app->has('shop')) {
+            $app->set('shop', ['class' => 'pistol88\shop\Shop']);
+        }
     }
 }

@@ -2,10 +2,13 @@
 namespace pistol88\shop\controllers;
 
 use Yii;
+use pistol88\shop\models\Modification;
+use pistol88\shop\models\Product;
+use pistol88\shop\models\PriceType;
+use pistol88\shop\models\Price;
+use pistol88\shop\models\price\PriceSearch;
 use pistol88\shop\models\product\ProductSearch;
 use pistol88\shop\models\stock\StockSearch;
-use pistol88\shop\models\price\PriceSearch;
-use pistol88\shop\models\PriceType;
 use pistol88\shop\events\ProductEvent;
 use pistol88\shop\models\modification\ModificationSearch;
 use yii\web\Controller;
@@ -43,23 +46,15 @@ class ProductController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'productColumns' => $this->module->productColumns,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
     public function actionCreate()
     {
-        $model = $this->module->getService('product');
-        $priceModel = $this->module->getService('price');
+        $model = new Product;
+        $priceModel = new Price;
         
         $priceTypes = PriceType::find()->orderBy('sort DESC')->all();
         
@@ -103,13 +98,13 @@ class ProductController extends Controller
         $typeParams = Yii::$app->request->queryParams;
         $typeParams['PriceSearch']['product_id'] = $id;
         $dataProvider = $searchModel->search($typeParams);
-        $priceModel = $this->module->getService('price');
+        $priceModel = new Price;
         
-        $modificationModel = $this->module->getService('modification');
+        $modificationModel = new Modification;
         $searchModificationModel = new ModificationSearch();
         $typeParams['ModificationSearch']['product_id'] = $id;
         $modificationDataProvider = $searchModificationModel->search($typeParams);
-        $modificationModel = $this->module->getService('modification');
+        $modificationModel = new Modification;
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $module = $this->module;
@@ -149,7 +144,7 @@ class ProductController extends Controller
     {
         $productCode = (int)yii::$app->request->post('productCode');
         
-        $model = $this->module->getService('product');
+        $model = new Product;
         
         if($model = $model::find()->where('code=:code OR id=:code', [':code' => $productCode])->one()) {
             $json = [
@@ -170,7 +165,7 @@ class ProductController extends Controller
     
     protected function findModel($id)
     {
-        $model = $this->module->getService('product');
+        $model = new Product;
         
         if (($model = $model::findOne($id)) !== null) {
             return $model;

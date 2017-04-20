@@ -3,6 +3,7 @@
 namespace pistol88\shop\controllers;
 
 use Yii;
+use pistol88\shop\models\Producer;
 use pistol88\shop\models\producer\ProducerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -53,7 +54,7 @@ class ProducerController extends Controller
 
     public function actionCreate()
     {
-        $model = $this->module->getService('producer');
+        $model = new Producer;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['update', 'id' => $model->id]);
@@ -87,7 +88,7 @@ class ProducerController extends Controller
 
     protected function findModel($id)
     {
-        $model = $this->module->getService('producer');
+        $model = new Producer;
         
         if (($model = $model::findOne($id)) !== null) {
             return $model;

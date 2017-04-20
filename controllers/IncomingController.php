@@ -4,7 +4,6 @@ namespace pistol88\shop\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;

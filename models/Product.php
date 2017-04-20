@@ -130,28 +130,22 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return false;
     }
     
-    public function getPriceModel($type = null)
+    public function getPriceModel($typeId = null)
     {
+        if(!$typeId) {
+            $typeId = yii::$app->getModule('shop')->defaultPriceTypeId;
+        }
+
         $prices = $this->getPrices();
 
         if(!$prices->count()) {
             return null;
         }
 
-        if(!$type) {
-            if($defaultType = yii::$app->getModule('shop')->getPriceTypeId($this)) {
-                $type = $defaultType;
-            } else {
-                $type = 'sort';
-            }
-        }
-
-        if($type == 'sort') {
-            $price = $prices->where('price > 0')->orderBy('sort DESC')->one();
-        } elseif($type) {
-            $price = $prices->where(['type_id' => $type])->one();
+        if($typeId) {
+            $price = $prices->where(['type_id' => $typeId])->one();
         } else {
-            $price = $prices->orderBy('price DESC')->one();
+            $price = $prices->orderBy('sort DESC')->one();
         }
         
         return $price;
@@ -164,6 +158,10 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
 
     public function getPrice($type = null)
     {
+        if($callable = yii::$app->getModule('shop')->priceCallable) {
+            return $callable($this);
+        }
+
         if($price = $this->getPriceModel($type)) {
             return $price->price;
         }
@@ -185,15 +183,18 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         return $this;
     }
     
-    public function getCartId() {
+    public function getCartId()
+    {
         return $this->id;
     }
     
-    public function getCartName() {
+    public function getCartName()
+    {
         return $this->name;
     }
     
-    public function getCartPrice() {
+    public function getCartPrice()
+    {
         return $this->price;
     }
 
@@ -240,7 +241,6 @@ class Product extends \yii\db\ActiveRecord implements \pistol88\relations\interf
         } else {
             return 0;
         }
-        
     }
 
     public function getLink()

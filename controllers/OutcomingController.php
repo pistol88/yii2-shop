@@ -4,9 +4,10 @@ namespace pistol88\shop\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use pistol88\shop\models\Outcoming;
+use pistol88\shop\models\Product;
 
 class OutcomingController extends Controller
 {
@@ -34,14 +35,14 @@ class OutcomingController extends Controller
 
     public function actionCreate()
     {
-        $model = $this->module->getService('outcoming');
+        $model = new Outcoming;;
 
         if ($post = Yii::$app->request->post()) {
             $model->date = time();
             $model->content = serialize($post);
             
-            $productModel = $this->module->getService('product');
-            $flas = '';
+            $productModel = new Product;
+
             foreach($post['element'] as $id => $count) {
                 if($product = $productModel::findOne($id)) {
                     $answer = $product->minusAmount($count, true);

@@ -25,9 +25,9 @@ class ToolsController extends Controller
     public function actionSync()
     {
         set_time_limit(0);
-        $productService = $this->module->getService('product');
-        $categoryService = $this->module->getService('category');
-		$producerService = $this->module->getService('producer');
+        $productService = new Product;
+        $categoryService = new Category;
+		$producerService = new Producer;
         
         $path = $this->module->oneC['importFolder'];
         if($ftp = $this->module->oneC['importFTP']) {
@@ -187,7 +187,7 @@ class ToolsController extends Controller
     
     private function parseCategory($groups, $parentId = 0)
     {
-        $categoryService = $this->module->getService('category');
+        $categoryService = new Category;
         
         foreach($groups as $group) {
             $code = (string)$group->Ид;
